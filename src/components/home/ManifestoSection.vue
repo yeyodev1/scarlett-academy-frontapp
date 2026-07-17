@@ -66,7 +66,7 @@ onBeforeUnmount(() => ctx?.revert())
           <span class="manifesto__mask"><span class="manifesto__line manifesto__line--italic">empoderadas.</span></span>
         </h2>
         <p class="manifesto__copy lede" data-fade>
-          Luisa Pita Bejarano ha construido una metodología de acompañamiento anual para mujeres que
+          Scarlett Cordova ha construido una metodología para mujeres que
           decidieron dejar de intentar programas cortos. Su enfoque no es la dieta: es el rediseño
           completo de tu relación con el movimiento, la alimentación y tu propio cuerpo.
         </p>
@@ -93,10 +93,10 @@ onBeforeUnmount(() => ctx?.revert())
 
       <figure class="manifesto__photo" ref="photoEl">
         <div class="manifesto__photo-wrap">
-          <img :src="portrait" alt="Retrato editorial de Luisa Pita Bejarano" loading="lazy" />
+          <img :src="portrait" alt="Retrato editorial de Scarlett Cordova" loading="lazy" />
         </div>
         <figcaption>
-          <span class="eyebrow">Luisa Pita Bejarano</span>
+          <span class="eyebrow">Scarlett Cordova</span>
           <span class="manifesto__caption italic-accent">Coach · Ecuador</span>
         </figcaption>
       </figure>

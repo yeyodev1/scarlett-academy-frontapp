@@ -21,7 +21,7 @@ const selectedPlan = ref<'annual' | 'monthly'>('annual')
 const boxConfig = ref<PaymentBoxConfig | null>(null)
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-  'Hola Luisa, quiero información sobre el plan mensual de la comunidad.',
+  'Hola Scarlett, quiero información sobre la academia digital.',
 )}`
 
 function openCheckout(plan: 'annual' | 'monthly') {
@@ -33,7 +33,7 @@ function openCheckout(plan: 'annual' | 'monthly') {
   // Pixel: AddToCart al abrir el popup de pago
   if (typeof fbq !== 'undefined') {
     fbq('track', 'AddToCart', {
-      content_name: 'Academia Luisa Pita Bejarano',
+      content_name: 'Quema Grasa, Construye Músculo',
       content_type: 'product',
       value: plan === 'annual' ? annualPrice : monthlyPrice,
       currency: 'USD',

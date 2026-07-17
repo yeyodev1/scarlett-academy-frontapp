@@ -106,7 +106,7 @@ onBeforeUnmount(() => ctx?.revert())
             <img
               :src="item.src"
               :srcset="`${item.src} 1x, ${item.srcLg} 2x`"
-              :alt="`Luisa Pita — ${item.label}`"
+              :alt="`Scarlett Cordova — ${item.label}`"
               loading="lazy"
             />
             <span class="gallery__img-badge">{{ item.label }}</span>

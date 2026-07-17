@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
     aria-hidden="true"
   >
     <div class="preloader__stage">
-      <p class="preloader__label">Luisa Pita Bejarano</p>
+      <p class="preloader__label">Scarlett Cordova</p>
       <h1 class="preloader__title">Comunidad anual de transformación</h1>
     </div>
 

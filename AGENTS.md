@@ -1,43 +1,22 @@
-# Agent Notes — Luisa Pita Bejarano Web Frontapp
+# AGENTS.md
 
-## Stack
-- Vue 3 + Vite + TypeScript + SCSS.
-- pnpm workspace (single app; `pnpm-workspace.yaml` is present but malformed and can be ignored).
-- State: Pinia. Routing: vue-router. Animation: GSAP + ScrollTrigger + Lenis smooth scroll.
+Vue 3 + TypeScript + Vite academy frontend for Scarlett Cordova and “Quema Grasa, Construye Músculo.”
 
-## Daily commands
-- `pnpm dev` — start Vite dev server.
-- `pnpm build` — type-check with `vue-tsc -b` then `vite build`.
-- `pnpm preview` — preview production build from `dist/`.
+## Tooling
 
-No test, lint, or formatter scripts are configured. Verification is `build` only.
+- Use `pnpm`; `pnpm build` runs `vue-tsc -b` before `vite build`. There are no test or lint scripts.
+- `pnpm-workspace.yaml` must allow `esbuild` and `@parcel/watcher`; pnpm 11 otherwise blocks installs/builds.
+- Both `vite.config.ts` and `vite.config.js` exist. Treat the TypeScript file as authoritative.
 
 ## Architecture
-- Entry: `src/main.ts` mounts `#app` from `index.html`.
-- Router: `src/router/index.ts`. Route `meta` drives dynamic SEO (title, description, OG, canonical).
-- Stores: `src/stores/user.ts` (Pinia, localStorage-backed auth state).
-- HTTP: `src/services/httpBase.ts` is the Axios base class; consumes `VITE_API_BASE_URL`.
-- Views: `src/views/` (Home, LegalNotice, PrivacyPolicy).
-- Components: `src/components/{layout,home,ui}/`.
 
-## Path alias
-- `@/` maps to `./src` in both Vite and TypeScript.
+- `src/router/index.ts` owns route SEO and guards; `/app/**` uses `DashboardLayout`, while public/auth routes use `TheNav` and `TheFooter` through `App.vue`.
+- `src/services/httpBase.ts` consumes `VITE_API_BASE_URL` and defaults to `http://localhost:8100/api`.
+- Pinia auth state is localStorage-backed in `src/stores/user.ts`; dashboard content is currently seeded client-side in `src/stores/dashboard.ts`.
 
-## Styles
-- `vite.config.ts` auto-injects `@use "@/styles/index.scss" as *;` into every `<style lang="scss">` block.
-- `index.scss` forwards color and font variables; use them directly in component SCSS without re-importing.
-- `src/styles/global.scss` is imported once in `main.ts` for global/base rules.
-- Theme CSS variables live on `:root` / `[data-theme="dark"]` in `global.scss`.
+## Brand And Assets
 
-## Environment
-- Copy `.env.example` to `.env` for local dev.
-- `VITE_API_BASE_URL` defaults to `http://localhost:8100/api` if unset.
-
-## Config gotcha
-- Both `vite.config.ts` and `vite.config.js` exist with identical content. Vite prefers `.ts`; `tsconfig.node.json` references only `vite.config.ts`. Treat `.ts` as the source of truth.
-
-## Conventions
-- `<script setup lang="ts">` for SFCs.
-- Components are PascalCase (`HeroSection.vue`, `AppButton.vue`).
-- Page SEO is defined in the route `meta`, not inside components.
-- Images are served from Cloudinary (`res.cloudinary.com/dkosgkjpq`).
+- Canonical palette values live in `src/styles/colorVariables.module.scss`. Legacy `$lpb-*` variable names remain for compatibility but represent Scarlett's red, black, cream, and lime palette.
+- Vite injects `@use "@/styles/index.scss" as *;` into every SCSS block; do not add redundant imports.
+- Use only Cloudinary cloud `kyt3rjjz`, folder `scarlett/quema-grasa-construye-musculo`. Keep URL construction in `src/config/site.ts`, `src/composables/useCloudinary.ts`, or shared store helpers.
+- `src/config/site.ts` centralizes public URLs and brand copy. Set `VITE_SITE_URL`, `VITE_FUNNEL_URL`, and `VITE_INSTAGRAM_URL` per deployment instead of hardcoding domains.

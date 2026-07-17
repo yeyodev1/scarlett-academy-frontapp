@@ -38,7 +38,7 @@ defineProps<{ items: string[]; speed?: number; theme?: 'light' | 'dark' | 'green
   }
 
   &--green {
-    background: linear-gradient(90deg, $lpb-green 0%, #1DB87A 40%, #C9A84C 100%);
+    background: linear-gradient(90deg, $lpb-green 0%, lighten($lpb-green, 12%) 52%, $lpb-gold 100%);
     color: $lpb-black;
   }
 }

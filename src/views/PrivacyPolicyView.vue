@@ -24,10 +24,10 @@ onMounted(() => {
       <section>
         <h2>1. Responsable del tratamiento</h2>
         <p>
-          Luisa Pita Bejarano, persona natural con domicilio en Ecuador (datos legales completos:
+          Scarlett Cordova, persona natural con domicilio en Ecuador (datos legales completos:
           <em>[PENDIENTE: nombre legal exacto, RUC/cédula, dirección física]</em>), es responsable del
           tratamiento de los datos personales recogidos a través del sitio
-          <strong>luisapitabejarano.com</strong>.
+          <strong>sitio oficial de Scarlett Cordova</strong>.
         </p>
         <p>
           Para consultas sobre privacidad puedes escribir a
@@ -49,8 +49,8 @@ onMounted(() => {
       <section>
         <h2>3. Finalidades</h2>
         <ul>
-          <li>Gestionar tu interés en la comunidad anual de Luisa Pita Bejarano.</li>
-          <li>Avisarte cuando abre la preventa VIP en <strong>vip.luisapitabejarano.com</strong>.</li>
+          <li>Gestionar tu cuenta y el acceso a los productos digitales de Scarlett Cordova.</li>
+          <li>Enviarte información operativa relacionada con tus compras y contenidos.</li>
           <li>Medir y optimizar las campañas publicitarias en plataformas como Meta (Facebook / Instagram).</li>
           <li>Cumplir obligaciones legales o requerimientos de autoridades competentes.</li>
         </ul>

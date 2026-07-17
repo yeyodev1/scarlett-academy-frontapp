@@ -52,7 +52,7 @@ async function setReminder() {
   <div v-if="isBeforeLaunch" class="launch-blocker">
     <div class="launch-blocker__card">
       <div class="launch-blocker__brand">
-        <span class="launch-blocker__logo">Luisa Pita Bejarano</span>
+        <span class="launch-blocker__logo">Scarlett Cordova</span>
         <span class="launch-blocker__tag">Academy</span>
       </div>
 

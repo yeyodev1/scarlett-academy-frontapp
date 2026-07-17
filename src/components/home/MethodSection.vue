@@ -16,7 +16,7 @@ const pillars = [
   {
     n: '03',
     title: 'Mentalidad y comunidad',
-    body: 'Sesiones grupales con Luisa, retos mensuales medibles y un círculo cerrado de mujeres que avanzan contigo. Sin curiosas, sin ruido.',
+    body: 'Sesiones grupales con Scarlett, retos medibles y un círculo de mujeres que avanzan contigo.',
   },
 ]
 
@@ -51,7 +51,7 @@ onBeforeUnmount(() => ctx?.revert())
   <section class="method" id="metodologia" ref="root">
     <div class="method__inner">
       <header class="method__header">
-        <span class="eyebrow eyebrow--green">Metodología Luisa Pita Bejarano</span>
+        <span class="eyebrow eyebrow--green">Metodología Scarlett Cordova</span>
         <h2 class="method__title display-lg">
           <span class="method__title-mask"><span>Tres pilares.</span></span>
           <span class="method__title-mask"><span class="method__title--italic">Doce meses.</span></span>

@@ -24,7 +24,7 @@ onMounted(() => {
       <section>
         <h2>1. Titular del sitio</h2>
         <p>
-          El sitio <strong>luisapitabejarano.com</strong> es propiedad de Luisa Pita Bejarano, persona
+          Este sitio es propiedad de Scarlett Cordova, persona
           natural con domicilio en Ecuador (<em>[PENDIENTE: nombre legal exacto, RUC/cédula, dirección física]</em>).
         </p>
         <p>
@@ -35,10 +35,10 @@ onMounted(() => {
       <section>
         <h2>2. Objeto del sitio</h2>
         <p>
-          luisapitabejarano.com es el sitio institucional de la marca personal de Luisa Pita Bejarano,
+          Este es el sitio digital de la marca personal de Scarlett Cordova,
           dirigido a presentar su trabajo como coach de transformación corporal y a invitar a mujeres
           a unirse a su comunidad anual cerrada, cuyo registro de preventa se realiza en
-          <strong>vip.luisapitabejarano.com</strong>.
+          sus productos y servicios digitales.
         </p>
       </section>
 
@@ -46,7 +46,7 @@ onMounted(() => {
         <h2>3. Propiedad intelectual</h2>
         <p>
           Todos los contenidos del sitio (textos, fotografías, gráficos, vídeos, logotipos y marca)
-          son propiedad de Luisa Pita Bejarano o se utilizan bajo licencia. Está prohibida su
+          son propiedad de Scarlett Cordova o se utilizan bajo licencia. Está prohibida su
           reproducción, distribución o transformación sin autorización previa.
         </p>
       </section>
@@ -68,7 +68,7 @@ onMounted(() => {
           asumimos responsabilidad por daños derivados del uso del mismo.
         </p>
         <p>
-          La participación en la comunidad anual de Luisa Pita Bejarano se rige por términos y
+          El acceso a los productos digitales de Scarlett Cordova se rige por términos y
           condiciones específicos que se entregan en el momento de la inscripción.
         </p>
       </section>
@@ -77,7 +77,7 @@ onMounted(() => {
         <h2>6. Enlaces externos</h2>
         <p>
           El sitio puede contener enlaces a sitios externos (por ejemplo, Instagram o
-          vip.luisapitabejarano.com). No nos hacemos responsables del contenido o políticas de esos
+          plataformas externas autorizadas). No nos hacemos responsables del contenido o políticas de esos
           sitios.
         </p>
       </section>

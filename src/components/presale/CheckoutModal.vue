@@ -93,7 +93,7 @@ function onBoxError(message: string) {
                     v-model="form.name"
                     type="text"
                     class="checkout-modal__input"
-                    placeholder="Ej. Luisa"
+                    placeholder="Ej. Scarlett"
                     required
                   />
                 </label>

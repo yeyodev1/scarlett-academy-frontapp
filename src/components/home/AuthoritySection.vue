@@ -51,26 +51,24 @@ onBeforeUnmount(() => ctx?.revert())
     <div class="authority__inner">
       <figure class="authority__photo" ref="photoEl">
         <div class="authority__photo-wrap">
-          <img :src="portrait" alt="Luisa Pita Bejarano" loading="lazy" />
+          <img :src="portrait" alt="Scarlett Cordova" loading="lazy" />
         </div>
       </figure>
 
       <div class="authority__content">
-        <span class="eyebrow" data-rise>Sobre Luisa Pita Bejarano</span>
+        <span class="eyebrow" data-rise>Sobre Scarlett Cordova</span>
         <h2 class="authority__title display-md" data-rise>
           <span class="italic-accent">Coach fitness y entrenadora personal</span> para mujeres con vidas que no caben en un plan de 8 semanas.
         </h2>
         <p class="authority__copy" data-rise>
-          <strong>Luisa Pita Bejarano</strong> es entrenadora personal y líder de comunidad con más
-          de una década transformando cuerpos de mujeres adultas en Ecuador, Latinoamérica, USA y
-          Europa. Su método se basa en consistencia, no en restricción — resultados reales que no
-          desaparecen cuando termina el programa.
+          <strong>Scarlett Cordova</strong> comparte un método de nutrición y entrenamiento basado
+          en ciencia aplicada, experiencia personal y una relación más sana con la comida. Su enfoque
+          prioriza la consistencia sobre la restricción y el progreso sostenible sobre los extremos.
         </p>
         <p class="authority__copy" data-rise>
-          Su comunidad anual cerrada nació de una convicción: los cambios profundos no caben en ocho
-          semanas. Por eso acompaña a sus alumnas <em>un año completo</em>, con la profundidad que
-          ese tiempo permite. Profesionales, líderes de hogar y emprendedoras que encontraron en el
-          acompañamiento anual la respuesta que los retos exprés nunca les dieron.
+          <em>Quema Grasa, Construye Músculo</em> nació de una convicción: transformar tu cuerpo no
+          debería exigir destruir tu salud mental. Por eso une déficit calórico, macros, entrenamiento
+          y amor propio en una ruta que puedas comprender y sostener.
         </p>
 
         <ul class="authority__pills" data-rise>

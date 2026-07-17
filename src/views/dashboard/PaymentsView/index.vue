@@ -69,7 +69,7 @@ const visibleHistory = computed(() =>
 )
 
 const whatsappLink = computed(
-  () => `https://wa.me/${whatsappNumber}?text=Hola, quiero realizar el pago por transferencia bancaria para la academia de Luisa Pita Bejarano. ¿Podrían indicarme los datos bancarios para hacer el depósito?`,
+  () => `https://wa.me/${whatsappNumber}?text=Hola, quiero información sobre mi compra en Scarlett Cordova. ¿Podrían ayudarme?`,
 )
 
 const accessUntilLabel = computed(() => {
