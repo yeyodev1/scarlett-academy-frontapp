@@ -3,8 +3,8 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCloudinary } from '@/composables/useCloudinary'
 import { gsap } from '@/composables/useScrollReveal'
 
-const { luisa } = useCloudinary()
-const portrait = luisa(11, { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
+const { scarlett } = useCloudinary()
+const portrait = scarlett(11, { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
 
 const root = ref<HTMLElement | null>(null)
 const photoEl = ref<HTMLElement | null>(null)

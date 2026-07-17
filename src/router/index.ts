@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, type RouteMeta, type RouteRecordRaw } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { SITE_URL } from '@/config/site'
 
 declare module 'vue-router' {
   interface RouteMeta {
@@ -15,14 +16,14 @@ declare module 'vue-router' {
   }
 }
 
-const SITE = 'https://luisapitabejarano.com'
+const SITE = SITE_URL
 const OG_IMAGE =
-  'https://res.cloudinary.com/dkosgkjpq/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/luisa-pita/luisa-11.jpg'
+  'https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg'
 
 const BRAND_TITLE =
-  'Luisa Pita Bejarano | Comunidad anual de transformación corporal para mujeres'
+  'Scarlett Cordova | Quema Grasa, Construye Músculo'
 const BRAND_DESC =
-  'Coach de mujeres ocupadas y dueñas de negocio. Un año entero junto a Luisa para transformar tu cuerpo y tu vida. Comunidad anual cerrada — preventa VIP por invitación.'
+  'Tu espacio digital para dominar nutrición, macros y entrenamiento con ciencia, estrategia y amor propio.'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -454,10 +455,16 @@ const setCanonical = (href: string) => {
 
 router.afterEach((to) => {
   const meta = to.meta
-  document.title = meta.title ?? BRAND_TITLE
-  setMeta('description', meta.description ?? BRAND_DESC)
-  setOgMeta('og:title', meta.ogTitle ?? meta.title ?? BRAND_TITLE)
-  setOgMeta('og:description', meta.ogDescription ?? meta.description ?? BRAND_DESC)
+  const rebrand = (value: string) => value
+    .replaceAll('Luisa Pita Bejarano Academy', 'Scarlett Cordova')
+    .replaceAll('Luisa Pita Bejarano', 'Scarlett Cordova')
+    .replaceAll('Luisa', 'Scarlett')
+    .replaceAll('luisapitabejarano.com', new URL(SITE).hostname)
+    .replaceAll('comunidad anual', 'academia digital')
+  document.title = rebrand(meta.title ?? BRAND_TITLE)
+  setMeta('description', rebrand(meta.description ?? BRAND_DESC))
+  setOgMeta('og:title', rebrand(meta.ogTitle ?? meta.title ?? BRAND_TITLE))
+  setOgMeta('og:description', rebrand(meta.ogDescription ?? meta.description ?? BRAND_DESC))
   setOgMeta('og:url', meta.ogUrl ?? SITE)
   setOgMeta('og:image', meta.ogImage ?? OG_IMAGE)
   setOgMeta('twitter:title', meta.ogTitle ?? meta.title ?? BRAND_TITLE)

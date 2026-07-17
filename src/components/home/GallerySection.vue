@@ -3,36 +3,36 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCloudinary } from '@/composables/useCloudinary'
 import { gsap } from '@/composables/useScrollReveal'
 
-const { luisa } = useCloudinary()
+const { scarlett } = useCloudinary()
 
 const editorial = [
   {
-    src: luisa(2, { w: 800, h: 1050, crop: 'thumb', gravity: 'face' }),
-    srcLg: luisa(2, { w: 1400, h: 1850, crop: 'thumb', gravity: 'face' }),
+    src: scarlett(2, { w: 800, h: 1050, crop: 'thumb', gravity: 'face' }),
+    srcLg: scarlett(2, { w: 1400, h: 1850, crop: 'thumb', gravity: 'face' }),
     label: 'Disciplina',
     span: 'half',
   },
   {
-    src: luisa(11, { w: 1100, h: 800, crop: 'fill', gravity: 'face' }),
-    srcLg: luisa(11, { w: 2000, h: 1450, crop: 'fill', gravity: 'face' }),
+    src: scarlett(11, { w: 1100, h: 800, crop: 'fill', gravity: 'face' }),
+    srcLg: scarlett(11, { w: 2000, h: 1450, crop: 'fill', gravity: 'face' }),
     label: 'Presencia',
     span: 'half',
   },
   {
-    src: luisa(2, { w: 700, h: 1000, crop: 'thumb', gravity: 'center' }),
-    srcLg: luisa(2, { w: 1200, h: 1700, crop: 'thumb', gravity: 'center' }),
+    src: scarlett(2, { w: 700, h: 1000, crop: 'thumb', gravity: 'center' }),
+    srcLg: scarlett(2, { w: 1200, h: 1700, crop: 'thumb', gravity: 'center' }),
     label: 'Cuerpo',
     span: 'third',
   },
   {
-    src: luisa(11, { w: 1300, h: 1000, crop: 'fill', gravity: 'center' }),
-    srcLg: luisa(11, { w: 2200, h: 1700, crop: 'fill', gravity: 'center' }),
+    src: scarlett(11, { w: 1300, h: 1000, crop: 'fill', gravity: 'center' }),
+    srcLg: scarlett(11, { w: 2200, h: 1700, crop: 'fill', gravity: 'center' }),
     label: 'Editorial',
     span: 'two-thirds',
   },
   {
-    src: luisa(2, { w: 1400, h: 900, crop: 'fill', gravity: 'auto' }),
-    srcLg: luisa(2, { w: 2400, h: 1500, crop: 'fill', gravity: 'auto' }),
+    src: scarlett(2, { w: 1400, h: 900, crop: 'fill', gravity: 'auto' }),
+    srcLg: scarlett(2, { w: 2400, h: 1500, crop: 'fill', gravity: 'auto' }),
     label: 'Propósito',
     span: 'full',
   },

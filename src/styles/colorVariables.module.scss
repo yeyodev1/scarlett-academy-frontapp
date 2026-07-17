@@ -1,22 +1,21 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// Luisa Pita Bejarano — Brand tokens canónicos
-// Tokens consistentes con funnel (CLAUDE.md). Sitio editorial luxe.
+// Scarlett Cordova — tokens compartidos con el funnel del ebook.
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Marca
-$lpb-green:        #16C784;
-$lpb-green-dark:   #0A9E68;
-$lpb-green-deep:   #087A50;
-$lpb-black:        #0D1117;
-$lpb-ink:          #1A1F2A;
-$lpb-graphite:     #3A4451;
-$lpb-muted:        #6B7280;
-$lpb-light:        #F0FFF8;
-$lpb-surface:      #F5FFFA;
-$lpb-cream:        #F8F5EF;
-$lpb-paper:        #FBFAF6;
+$lpb-green:        #FF4B2B;
+$lpb-green-dark:   #D83B21;
+$lpb-green-deep:   #A72D1B;
+$lpb-black:        #12110F;
+$lpb-ink:          #1E1C19;
+$lpb-graphite:     #4E4943;
+$lpb-muted:        #6D655E;
+$lpb-light:        #FFFAF4;
+$lpb-surface:      #FFFAF4;
+$lpb-cream:        #F3EDE4;
+$lpb-paper:        #FFFAF4;
 $lpb-white:        #FFFFFF;
-$lpb-line:         #E5E9EC;
+$lpb-line:         #DED5CB;
 
 // Legacy aliases (compat con scaffold inicial — no romper imports antiguos)
 $primary:          $lpb-green;
@@ -28,8 +27,8 @@ $text-light:       $lpb-white;
 $text-secondary:   $lpb-muted;
 
 // Acentos vibrantes adicionales (armonía editorial ampliada)
-$lpb-gold:         #C9A84C;
-$lpb-amber:        #F59E0B;
+$lpb-gold:         #D7FF45;
+$lpb-amber:        #D7FF45;
 
 // Alert colors
 $alert-warning:    #F59E0B;

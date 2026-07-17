@@ -6,14 +6,14 @@ import { buildVipUrl } from '@/config/site'
 import AppButton from '@/components/ui/AppButton.vue'
 import RevealText from '@/components/ui/RevealText.vue'
 
-const { luisa } = useCloudinary()
+const { scarlett } = useCloudinary()
 
 // Imagen editorial Cloudinary. Mobile-first: srcset con anchos progresivos.
-const heroImage = luisa(2, { w: 1600, h: 2200, crop: 'fill', gravity: 'face' })
-const heroImageSm = luisa(2, { w: 720, h: 1100, crop: 'fill', gravity: 'face' })
-const heroImageMd = luisa(2, { w: 1100, h: 1500, crop: 'fill', gravity: 'face' })
-const heroImageLg = luisa(2, { w: 2000, h: 2600, crop: 'fill', gravity: 'face' })
-const heroImagePoster = luisa(2, { w: 320, crop: 'fill', gravity: 'face', blur: 1000 })
+const heroImage = scarlett(2, { w: 1600, h: 2200, crop: 'fill', gravity: 'face' })
+const heroImageSm = scarlett(2, { w: 720, h: 1100, crop: 'fill', gravity: 'face' })
+const heroImageMd = scarlett(2, { w: 1100, h: 1500, crop: 'fill', gravity: 'face' })
+const heroImageLg = scarlett(2, { w: 2000, h: 2600, crop: 'fill', gravity: 'face' })
+const heroImagePoster = scarlett(2, { w: 320, crop: 'fill', gravity: 'face', blur: 1000 })
 
 const root = ref<HTMLElement | null>(null)
 const imageEl = ref<HTMLImageElement | null>(null)
@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
         :srcset="`${heroImageSm} 720w, ${heroImageMd} 1100w, ${heroImage} 1600w, ${heroImageLg} 2000w`"
         sizes="100vw"
         :style="{ backgroundImage: `url(${heroImagePoster})` }"
-        alt="Luisa Pita Bejarano — coach fitness para mujeres empoderadas en Ecuador y Latinoamérica"
+        alt="Scarlett Cordova — nutrición y entrenamiento para mujeres"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
       </span>
 
       <h1 class="hero__title display-xxl">
-        <span class="visually-hidden">Luisa Pita Bejarano — Coach Fitness para mujeres empoderadas.</span>
+        <span class="visually-hidden">Scarlett Cordova — Quema Grasa, Construye Músculo.</span>
         <span class="hero__line" aria-hidden="true">
           <RevealText text="Coach" tag="span" :stagger="0.06" />
         </span>
@@ -90,8 +90,8 @@ onBeforeUnmount(() => {
       </h1>
 
       <p class="hero__lede">
-        Coach de mujeres ocupadas y dueñas de negocio. Un año entero junto a Luisa para
-        transformar tu cuerpo y tu vida — comunidad anual cerrada por invitación.
+        Nutrición y entrenamiento explicados para transformar tu cuerpo sin extremos,
+        sin miedo a la comida y sin perderte en el proceso.
       </p>
 
       <div class="hero__cta-row">

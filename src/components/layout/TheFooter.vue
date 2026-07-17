@@ -12,8 +12,8 @@ const year = new Date().getFullYear()
       <div class="footer__mark">
         <BrandWordmark size="lg" />
         <p class="footer__tagline">
-          Un año contigo, un año cerca de Luisa.<br />
-          La comunidad anual cerrada para mujeres decididas.
+          Ciencia, estrategia y amor propio.<br />
+          Tu proceso, a tu ritmo, con Scarlett Cordova.
         </p>
       </div>
 
@@ -38,7 +38,7 @@ const year = new Date().getFullYear()
         <RouterLink :to="{ name: 'privacy-policy' }" class="footer__link">Políticas de privacidad</RouterLink>
         <RouterLink :to="{ name: 'legal-notice' }" class="footer__link">Aviso legal</RouterLink>
       </nav>
-      <p class="footer__copy">© {{ year }} Luisa Pita Bejarano · Ecuador</p>
+      <p class="footer__copy">© {{ year }} Scarlett Cordova</p>
     </div>
   </footer>
 </template>

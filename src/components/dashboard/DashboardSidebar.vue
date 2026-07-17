@@ -203,7 +203,7 @@ function logout() {
         </button>
       </div>
 
-      <p class="sidebar__copy">© {{ new Date().getFullYear() }} Luisa Pita Bejarano</p>
+      <p class="sidebar__copy">© {{ new Date().getFullYear() }} Scarlett Cordova</p>
     </div>
   </aside>
 
@@ -233,7 +233,7 @@ function logout() {
   <ConfirmModal
     :open="activeModal === 'logout'"
     title="Cerrar sesión"
-    message="Vas a cerrar tu sesión en Luisa Pita Bejarano Academy. Deberás volver a iniciar sesión para acceder a tu cuenta."
+    message="Vas a cerrar tu sesión en Scarlett Cordova. Deberás volver a iniciar sesión para acceder a tu cuenta."
     action-label="Cerrar sesión"
     danger
     @confirm="logout"

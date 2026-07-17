@@ -1,10 +1,10 @@
 // Centralized site config: URLs, copy hub, redes.
 // Cualquier CTA hacia el funnel VIP debe usar `buildVipUrl(placement)` para tagging UTM.
 
-export const SITE_URL = 'https://luisapitabejarano.com'
-export const VIP_URL = 'https://vip.luisapitabejarano.com'
-export const INSTAGRAM_URL = 'https://www.instagram.com/luisapitabejarano/'
-export const INSTAGRAM_HANDLE = '@luisapitabejarano'
+export const SITE_URL = import.meta.env.VITE_SITE_URL || window.location.origin
+export const VIP_URL = import.meta.env.VITE_FUNNEL_URL || 'https://scarlettcordova-quemagrasa-cons-musc.netlify.app'
+export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/'
+export const INSTAGRAM_HANDLE = '@scarlettcordova'
 
 export const buildVipUrl = (placement: string): string => {
   const params = new URLSearchParams({
@@ -16,7 +16,7 @@ export const buildVipUrl = (placement: string): string => {
   return `${VIP_URL}?${params.toString()}`
 }
 
-export const CLOUDINARY_CDN = 'https://res.cloudinary.com/dkosgkjpq/image/upload'
+export const CLOUDINARY_CDN = 'https://res.cloudinary.com/kyt3rjjz/image/upload'
 
 /** Helper para URLs de Cloudinary con transformaciones */
 export const cld = (
@@ -25,10 +25,10 @@ export const cld = (
 ): string => `${CLOUDINARY_CDN}/${transform}/${publicId}`
 
 export const SITE_COPY = {
-  brand: 'Luisa Pita Bejarano',
-  brandShort: 'Luisa Pita',
-  tagline: 'Un año contigo, un año cerca de Luisa.',
-  ctaPrimary: 'Únete a la comunidad',
-  ctaPrimaryShort: 'Únete',
-  ctaSecondary: 'Solicitar invitación',
+  brand: 'Scarlett Cordova',
+  brandShort: 'Scarlett',
+  tagline: 'Cambia desde adentro. Entrena con ciencia.',
+  ctaPrimary: 'Entrar a mi cuenta',
+  ctaPrimaryShort: 'Entrar',
+  ctaSecondary: 'Crear cuenta',
 } as const

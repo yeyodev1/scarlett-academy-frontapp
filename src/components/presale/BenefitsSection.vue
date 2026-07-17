@@ -2,33 +2,33 @@
 const benefits = [
   {
     icon: 'fa-solid fa-heart-pulse',
-    title: 'Acompañamiento real',
-    description: 'Seguimiento directo de Luisa y su equipo para que nunca te sientas sola en el proceso.',
+    title: 'Déficit sin drama',
+    description: 'Comprende la pérdida de grasa sin pasar hambre ni castigar tu metabolismo.',
   },
   {
     icon: 'fa-solid fa-dumbbell',
-    title: 'Entrenamientos efectivos',
-    description: 'Rutinas diseñadas para mujeres ocupadas, en casa o gimnasio, sin excusas.',
+    title: 'Entrenamiento inteligente',
+    description: 'Rutinas estructuradas para proteger músculo y avanzar con intención.',
   },
   {
     icon: 'fa-solid fa-carrot',
-    title: 'Nutrición sin restricciones',
-    description: 'Aprende a comer mejor sin dietas extremas ni contar cada caloría.',
+    title: 'Macros personalizados',
+    description: 'Calcula proteína, carbohidratos y grasas según tu cuerpo y actividad.',
   },
   {
     icon: 'fa-solid fa-users',
-    title: 'Comunidad privada',
-    description: 'Rodéate de mujeres con metas similares que empujan en la misma dirección.',
+    title: 'Nutrición sin miedo',
+    description: 'Aprende a comer con estrategia, variedad y tranquilidad.',
   },
   {
     icon: 'fa-solid fa-mobile-screen',
-    title: 'App y contenido exclusivo',
-    description: 'Acceso a videos, guías y recursos solo para miembros de la comunidad.',
+    title: 'Recetas y Scar-Tips',
+    description: 'Ideas reales, altas en proteína y fáciles de incorporar a tu día.',
   },
   {
     icon: 'fa-solid fa-gift',
-    title: 'Precio de preventa',
-    description: 'Asegura tu cupo con el valor promocional antes de que cierre la convocatoria.',
+    title: 'Progreso sostenible',
+    description: 'Mide cambios reales sin depender únicamente del número de la balanza.',
   },
 ]
 </script>
@@ -36,8 +36,8 @@ const benefits = [
 <template>
   <section id="beneficios" class="benefits">
     <div class="benefits__inner">
-      <span class="eyebrow eyebrow--green">¿Qué incluye?</span>
-      <h2 class="benefits__title display-lg">Todo lo que necesitas para transformarte</h2>
+      <span class="eyebrow eyebrow--green">TU MÉTODO, EN UN SOLO LUGAR</span>
+      <h2 class="benefits__title display-lg">Cambia desde adentro.</h2>
 
       <div class="benefits__grid">
         <article v-for="benefit in benefits" :key="benefit.title" class="benefit-card">

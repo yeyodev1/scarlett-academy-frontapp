@@ -3,18 +3,16 @@ defineProps<{ size?: 'sm' | 'md' | 'lg'; variant?: 'full' | 'mono' }>()
 </script>
 
 <template>
-  <span class="wordmark" :class="[`wordmark--${size ?? 'md'}`, `wordmark--${variant ?? 'full'}`]" aria-label="Luisa Pita Bejarano">
-    <!-- Versión Logotipo Completo (Normal, HTML Puro) -->
+  <span class="wordmark" :class="[`wordmark--${size ?? 'md'}`, `wordmark--${variant ?? 'full'}`]" aria-label="Scarlett Cordova">
     <div v-if="variant !== 'mono'" class="wordmark__full">
-      <span class="wordmark__name wordmark__name--italic">Luisa Pita </span>
-      <span class="wordmark__name wordmark__name--bold">Bejarano</span>
+      <span class="wordmark__name wordmark__name--italic">Scarlett </span>
+      <span class="wordmark__name wordmark__name--bold">Cordova</span>
       <div class="wordmark__line" aria-hidden="true" />
     </div>
 
-    <!-- Versión Monograma con Font Awesome -->
     <div v-else class="wordmark__mono">
-      <i class="fa-solid fa-crown wordmark__crown" aria-hidden="true"></i>
-      <span class="wordmark__initials">LpB</span>
+      <span class="wordmark__dot" aria-hidden="true"></span>
+      <span class="wordmark__initials">SC</span>
     </div>
   </span>
 </template>
@@ -65,10 +63,11 @@ defineProps<{ size?: 'sm' | 'md' | 'lg'; variant?: 'full' | 'mono' }>()
   gap: 2px;
 }
 
-.wordmark__crown {
-  font-size: 0.6em;
-  opacity: 0.8;
-  color: $lpb-green;
+.wordmark__dot {
+  width: 0.35em;
+  height: 0.35em;
+  border-radius: 50%;
+  background: $lpb-gold;
 }
 
 .wordmark__initials {

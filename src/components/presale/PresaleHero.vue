@@ -1,27 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCloudinary } from '@/composables/useCloudinary'
-import CountdownTimer from './CountdownTimer.vue'
-import AppButton from '@/components/ui/AppButton.vue'
 
-const { luisa } = useCloudinary()
+const { scarlett } = useCloudinary()
 
-const deadline = (import.meta.env.VITE_PRESALE_DEADLINE as string) || '2026-07-16T23:59:59-05:00'
-const heroImage = luisa(11, { w: 1600, h: 2200, crop: 'fill', gravity: 'face' })
-const heroImageSm = luisa(11, { w: 720, h: 1100, crop: 'fill', gravity: 'face' })
-const heroImageMd = luisa(11, { w: 1100, h: 1500, crop: 'fill', gravity: 'face' })
-const heroImageLg = luisa(11, { w: 2000, h: 2600, crop: 'fill', gravity: 'face' })
-
-const scrollToPlans = () => {
-  const el = document.getElementById('planes')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
-
-const isExpired = computed(() => {
-  if (!deadline) return false
-  return new Date(deadline).getTime() < Date.now()
-})
+const heroImage = scarlett(11, { w: 1600, h: 2200, crop: 'fill', gravity: 'face' })
+const heroImageSm = scarlett(11, { w: 720, h: 1100, crop: 'fill', gravity: 'face' })
+const heroImageMd = scarlett(11, { w: 1100, h: 1500, crop: 'fill', gravity: 'face' })
+const heroImageLg = scarlett(11, { w: 2000, h: 2600, crop: 'fill', gravity: 'face' })
 </script>
 
 <template>
@@ -32,7 +18,7 @@ const isExpired = computed(() => {
         :src="heroImage"
         :srcset="`${heroImageSm} 720w, ${heroImageMd} 1100w, ${heroImage} 1600w, ${heroImageLg} 2000w`"
         sizes="100vw"
-        alt="Luisa Pita Bejarano — comunidad anual de transformación corporal"
+        alt="Scarlett Cordova — Quema Grasa, Construye Músculo"
         loading="eager"
         fetchpriority="high"
         decoding="async"
@@ -45,29 +31,24 @@ const isExpired = computed(() => {
     <div class="presale-hero__inner">
       <span class="presale-hero__eyebrow eyebrow eyebrow--green">
         <span class="presale-hero__dot" aria-hidden="true" />
-        Preventa VIP abierta
+        SCARLETT CORDOVA · ACADEMIA DIGITAL
       </span>
 
       <h1 class="presale-hero__title display-xl">
-        Comunidad anual cerrada
+        Quema Grasa,<br>Construye Músculo
       </h1>
 
       <p class="presale-hero__lede">
-        Un año entero junto a Luisa para transformar tu cuerpo y tu vida.
-        Acompañamiento real, entrenamiento y nutrición sin dietas restrictivas.
+        Tu espacio para aprender nutrición, dominar tus macros y entrenar con ciencia,
+        estrategia y amor propio.
       </p>
 
-      <div class="presale-hero__countdown">
-        <p class="presale-hero__countdown-label">La preventa cierra en:</p>
-        <CountdownTimer :deadline="deadline" />
-      </div>
-
       <div class="presale-hero__cta-row">
-        <AppButton v-if="!isExpired" variant="primary" size="lg" @click="scrollToPlans">
-          Ver planes
-        </AppButton>
-        <RouterLink v-else :to="{ name: 'register' }" class="presale-hero__link">
-          Únete a la lista de espera
+        <RouterLink :to="{ name: 'login' }" class="presale-hero__link">
+          Entrar a mi cuenta
+        </RouterLink>
+        <RouterLink :to="{ name: 'register' }" class="presale-hero__secondary">
+          Crear cuenta
         </RouterLink>
       </div>
     </div>
@@ -241,5 +222,20 @@ const isExpired = computed(() => {
     color: $lpb-white;
     transform: translateY(-2px);
   }
+}
+
+.presale-hero__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.05rem 1.7rem;
+  border: 1px solid rgba($lpb-white, 0.35);
+  border-radius: 999px;
+  color: $lpb-white;
+  font-family: $font-mono;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 </style>

@@ -30,10 +30,14 @@ export const useCloudinary = () => {
   const img = (publicId: string, opts: ImgOpts = {}) =>
     `${CLOUDINARY_CDN}/${build(opts)}/${publicId}`
 
-  const luisa = (variant: number, opts: ImgOpts = {}) =>
-    img(`luisa-pita/luisa-${variant}.jpg`, opts)
+  const photos: Record<number, string> = {
+    2: 'img-2501-jpg.jpg',
+    11: 'img-9664-jpg.jpg',
+  }
+  const scarlett = (variant: number, opts: ImgOpts = {}) =>
+    img(`scarlett/quema-grasa-construye-musculo/${photos[variant] || 'img-2069-jpg.jpg'}`, opts)
 
-  return { img, luisa, build }
+  return { img, scarlett, build }
 }
 
 // Fallback estático para SSR-friendly templates: srcSet construido

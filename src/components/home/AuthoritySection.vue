@@ -4,8 +4,8 @@ import { useCloudinary } from '@/composables/useCloudinary'
 import { gsap } from '@/composables/useScrollReveal'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/config/site'
 
-const { luisa } = useCloudinary()
-const portrait = luisa(2, { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
+const { scarlett } = useCloudinary()
+const portrait = scarlett(2, { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
 
 const root = ref<HTMLElement | null>(null)
 const photoEl = ref<HTMLElement | null>(null)

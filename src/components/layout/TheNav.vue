@@ -89,7 +89,7 @@ const logout = () => {
           <nav class="nav__links">
             <template v-if="!userStore.isAuthenticated">
               <RouterLink :to="{ name: 'home', hash: '#planes' }" class="nav__link" @click="close">
-                <span class="nav__num">01</span> Pricing
+                <span class="nav__num">01</span> El método
               </RouterLink>
               <RouterLink :to="{ name: 'login' }" class="nav__link" @click="close">
                 <span class="nav__num">02</span> Iniciar sesión
@@ -101,7 +101,7 @@ const logout = () => {
             </template>
             <template v-else>
               <RouterLink :to="{ name: 'home', hash: '#planes' }" class="nav__link" @click="close">
-                <span class="nav__num">01</span> Pricing
+                <span class="nav__num">01</span> El método
               </RouterLink>
               <RouterLink
                 :to="{ name: userStore.role === 'admin' ? 'admin-users' : 'dashboard' }"
@@ -129,7 +129,7 @@ const logout = () => {
             <a :href="INSTAGRAM_URL" target="_blank" rel="noopener" class="nav__social">
               Instagram {{ INSTAGRAM_HANDLE }}
             </a>
-            <p class="nav__copy">© {{ new Date().getFullYear() }} Luisa Pita Bejarano</p>
+            <p class="nav__copy">© {{ new Date().getFullYear() }} Scarlett Cordova</p>
           </div>
         </div>
       </div>
