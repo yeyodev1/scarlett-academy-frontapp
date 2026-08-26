@@ -10,8 +10,31 @@ export interface AdminUser {
   subscriptionStatus: 'none' | 'pending' | 'active' | 'canceled'
   accessUntil: string | null
   foundingMember: boolean
+  /** De dónde viene el acceso: compra, VIP otorgado por admin, o alta manual. */
+  accessSource: 'payment' | 'vip' | 'admin' | null
+  vipNote: string | null
   isVerified: boolean
   createdAt: string
+}
+
+export interface AdminVip {
+  id: string
+  name: string
+  lastName: string
+  email: string
+  subscriptionStatus: 'none' | 'pending' | 'active' | 'canceled'
+  accessUntil: string | null
+  vipNote: string | null
+  createdAt: string
+}
+
+export interface GrantVipPayload {
+  name: string
+  lastName: string
+  email: string
+  /** Meses de acceso. Por defecto 3 (duración del reto). */
+  months?: number
+  note?: string
 }
 
 export interface CreateUserPayload {
@@ -36,7 +59,7 @@ export interface ManualPayment {
     lastName: string
     email: string
   }
-  plan: 'monthly' | 'annual'
+  plan: 'reto' | 'monthly' | 'annual'
   amount: number
   currency: 'USD'
   status: 'pending' | 'approved'
@@ -74,7 +97,7 @@ export interface ListPaymentsResponse {
 
 export interface CreatePaymentPayload {
   userId: string
-  plan: 'monthly' | 'annual'
+  plan: 'reto' | 'monthly' | 'annual'
   amount: number
   notes: string
   receipt: File
@@ -136,6 +159,23 @@ class AdminService extends APIBase {
 
   deletePayment(id: string) {
     return this.delete<ApiResponse<{ deleted: boolean }>>(`admin/payments/${id}`)
+  }
+
+  /** Usuarias con acceso VIP (sin pago). */
+  listVips() {
+    return this.get<ApiResponse<{ vips: AdminVip[]; total: number }>>('admin/vips')
+  }
+
+  /** Otorga acceso al reto sin cobro. Si la usuaria no existe, la crea y le envía su clave. */
+  grantVip(payload: GrantVipPayload) {
+    return this.post<ApiResponse<{ user: AdminUser; created: boolean; months: number }>>(
+      'admin/vips',
+      payload,
+    )
+  }
+
+  revokeVip(id: string) {
+    return this.delete<ApiResponse<{ user: AdminUser }>>(`admin/vips/${id}`)
   }
 }
 

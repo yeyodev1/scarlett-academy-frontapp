@@ -14,6 +14,7 @@ const showLogoutConfirm = ref(false)
 
 const menuItems = [
   { name: 'admin-users', label: 'Usuarios', icon: 'users' },
+  { name: 'admin-vips', label: 'VIPs', icon: 'crown' },
   { name: 'admin-payments', label: 'Pagos manuales', icon: 'money-bill' },
 ]
 
