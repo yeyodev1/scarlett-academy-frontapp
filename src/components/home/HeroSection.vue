@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useCloudinary } from '@/composables/useCloudinary'
 import { gsap, ScrollTrigger } from '@/composables/useScrollReveal'
-import { buildVipUrl } from '@/config/site'
+import { buildCheckoutUrl } from '@/config/site'
 import AppButton from '@/components/ui/AppButton.vue'
 import RevealText from '@/components/ui/RevealText.vue'
 
@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
       </p>
 
       <div class="hero__cta-row">
-        <AppButton :href="buildVipUrl('hero')" variant="primary" size="lg">Únete a la comunidad</AppButton>
+        <AppButton :href="buildCheckoutUrl('hero')" variant="primary" size="lg">Únete a la comunidad</AppButton>
         <a href="#filosofia" class="hero__quiet" data-lenis-prevent>
           <span>Conocer el método</span>
           <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size: 0.75rem;"></i>

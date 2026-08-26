@@ -1,20 +1,19 @@
 // Centralized site config: URLs, copy hub, redes.
-// Cualquier CTA hacia el funnel VIP debe usar `buildVipUrl(placement)` para tagging UTM.
+// La compra ocurre dentro del sitio (sección #planes). No hay funnel externo.
 
 export const SITE_URL = import.meta.env.VITE_SITE_URL || window.location.origin
-export const VIP_URL = import.meta.env.VITE_FUNNEL_URL || 'https://scarlettcordova-quemagrasa-cons-musc.netlify.app'
 export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/'
 export const INSTAGRAM_HANDLE = '@scarlettcordova'
 
-export const buildVipUrl = (placement: string): string => {
-  const params = new URLSearchParams({
-    utm_source: 'site',
-    utm_medium: 'cta',
-    utm_campaign: 'community',
-    utm_content: placement,
-  })
-  return `${VIP_URL}?${params.toString()}`
-}
+/** Ancla de la sección de compra en el home. */
+export const CHECKOUT_HASH = '#planes'
+
+/**
+ * Destino de cualquier CTA de compra. Apunta a la sección de precio del propio
+ * sitio; `placement` se conserva para poder etiquetar el origen del clic.
+ */
+export const buildCheckoutUrl = (placement?: string): string =>
+  placement ? `/${CHECKOUT_HASH}?from=${encodeURIComponent(placement)}` : `/${CHECKOUT_HASH}`
 
 export const CLOUDINARY_CDN = 'https://res.cloudinary.com/kyt3rjjz/image/upload'
 

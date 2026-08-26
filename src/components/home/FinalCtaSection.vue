@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from '@/composables/useScrollReveal'
-import { buildVipUrl } from '@/config/site'
+import { buildCheckoutUrl } from '@/config/site'
 import AppButton from '@/components/ui/AppButton.vue'
 
 const root = ref<HTMLElement | null>(null)
@@ -49,7 +49,7 @@ onBeforeUnmount(() => ctx?.revert())
       </p>
 
       <div class="final-cta__cta" data-fade>
-        <AppButton :href="buildVipUrl('final-cta')" variant="primary" size="lg">
+        <AppButton :href="buildCheckoutUrl('final-cta')" variant="primary" size="lg">
           Únete a la comunidad
         </AppButton>
       </div>
