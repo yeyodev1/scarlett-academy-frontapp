@@ -2,10 +2,16 @@ import APIBase from './httpBase'
 import type { ApiResponse } from './authService'
 
 export interface PresaleStatus {
+  /** Fin de la preventa (ISO). */
   deadline: string
+  /** true mientras la preventa siga vigente. */
   isActive: boolean
-  annualPrice: number
-  monthlyPrice: number
+  /** Precio que se cobrará ahora mismo (67 en preventa, 87 después). */
+  currentPrice: number
+  presalePrice: number
+  regularPrice: number
+  /** Duración del reto en meses. */
+  accessMonths: number
   whatsappNumber: string
 }
 
