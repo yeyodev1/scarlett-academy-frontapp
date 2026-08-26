@@ -5,8 +5,12 @@ import type { PaymentBoxConfig } from '@/services/paymentService'
 
 const props = defineProps<{
   open: boolean
-  plan: 'annual' | 'monthly'
+  /** Precio vigente en dólares (67 en preventa, 87 después). */
   price: number
+  /** Precio normal, para tacharlo mientras dure la preventa. */
+  regularPrice: number
+  isPresale: boolean
+  accessMonths: number
   loading: boolean
   error?: string
   boxConfig?: PaymentBoxConfig | null
@@ -93,7 +97,7 @@ function onBoxError(message: string) {
                     v-model="form.name"
                     type="text"
                     class="checkout-modal__input"
-                    placeholder="Ej. Scarlett"
+                    placeholder="Ej. María"
                     required
                   />
                 </label>
@@ -103,14 +107,20 @@ function onBoxError(message: string) {
                     v-model="form.lastName"
                     type="text"
                     class="checkout-modal__input"
-                    placeholder="Ej. Pita"
+                    placeholder="Ej. Pérez"
                     required
                   />
                 </label>
               </div>
               <div class="checkout-modal__summary">
-                <span class="checkout-modal__summary-label">Total a pagar</span>
-                <span class="checkout-modal__summary-value">USD {{ price }}</span>
+                <span class="checkout-modal__summary-label">
+                  Total a pagar
+                  <small>Reto de {{ accessMonths }} meses</small>
+                </span>
+                <span class="checkout-modal__summary-value">
+                  <s v-if="isPresale" class="checkout-modal__summary-strike">USD {{ regularPrice }}</s>
+                  USD {{ price }}
+                </span>
               </div>
               <p v-if="error" class="checkout-modal__feedback checkout-modal__feedback--error">{{ error }}</p>
               <div class="checkout-modal__actions">
@@ -364,5 +374,17 @@ function onBoxError(message: string) {
   .checkout-modal__grid {
     grid-template-columns: 1fr;
   }
+}
+
+.checkout-modal__summary-label small {
+  display: block;
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.checkout-modal__summary-strike {
+  opacity: 0.55;
+  font-weight: 400;
+  margin-right: 0.4rem;
 }
 </style>

@@ -2,12 +2,13 @@
 import { onMounted } from 'vue'
 import PresaleHero from '@/components/presale/PresaleHero.vue'
 import BenefitsSection from '@/components/presale/BenefitsSection.vue'
+import PlansSection from '@/components/presale/PlansSection.vue'
 import MarqueeText from '@/components/ui/MarqueeText.vue'
 
 onMounted(() => {
   if (typeof fbq !== 'undefined') {
     fbq('track', 'ViewContent', {
-      content_name: 'Quema Grasa, Construye Músculo',
+      content_name: 'Reto 3 meses - Metodo SK',
       content_type: 'product',
     })
   }
@@ -28,6 +29,7 @@ const marqueeItems = [
     <PresaleHero />
     <MarqueeText :items="marqueeItems" theme="green" :speed="42" />
     <BenefitsSection />
+    <PlansSection />
     <MarqueeText :items="['Tu proceso es tuyo', 'Sin castigo', 'Sin extremos', 'Resultados sostenibles']" theme="dark" :speed="48" />
   </div>
 </template>

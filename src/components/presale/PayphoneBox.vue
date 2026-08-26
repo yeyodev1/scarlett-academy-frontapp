@@ -79,16 +79,23 @@ async function renderBox() {
       throw new Error('El SDK de Payphone no está disponible')
     }
 
+    // Parámetros según https://docs.payphone.app/cajita-de-pagos
     const box = new PPaymentButtonBox({
       token: props.config.token,
+      storeId: props.config.storeId,
+      clientTransactionId: props.config.clientTransactionId,
       amount: props.config.amount,
       amountWithoutTax: props.config.amountWithoutTax,
+      amountWithTax: props.config.amountWithTax,
+      tax: props.config.tax,
+      service: props.config.service,
+      tip: props.config.tip,
       currency: props.config.currency,
-      clientTransactionId: props.config.clientTransactionId,
-      storeId: props.config.storeId,
       reference: props.config.reference,
       responseUrl: props.config.responseUrl,
-      render: boxContainerId,
+      lang: props.config.lang,
+      timeZone: props.config.timeZone,
+      email: props.config.email,
     })
 
     box.render(boxContainerId)

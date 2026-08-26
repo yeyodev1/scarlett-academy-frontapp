@@ -1,31 +1,30 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import { paymentService } from '@/services/paymentService'
 import type { PaymentBoxConfig } from '@/services/paymentService'
+import { usePricing } from '@/composables/usePricing'
 import CheckoutModal from './CheckoutModal.vue'
 
-const annualPrice = Number(import.meta.env.VITE_ANNUAL_PRICE) || 297
-const monthlyPrice = Number(import.meta.env.VITE_MONTHLY_PRICE) || 45
 const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER as string) || '593999999999'
-const launchDeadline = (import.meta.env.VITE_LAUNCH_DEADLINE as string) || '2026-07-16T00:00:00-05:00'
 
-const isMonthlyAvailable = computed(() => {
-  return new Date().getTime() >= new Date(launchDeadline).getTime()
-})
+// Precio y ventana de preventa vienen del backend; el cliente nunca los define.
+const { load, currentPrice, regularPrice, isPresale, accessMonths, savings, deadline } = usePricing()
 
 const loading = ref(false)
 const error = ref('')
 const showModal = ref(false)
-const selectedPlan = ref<'annual' | 'monthly'>('annual')
 const boxConfig = ref<PaymentBoxConfig | null>(null)
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-  'Hola Scarlett, quiero información sobre la academia digital.',
+  'Hola, quiero información sobre el reto de 3 meses.',
 )}`
 
-function openCheckout(plan: 'annual' | 'monthly') {
-  selectedPlan.value = plan
+const deadlineLabel = () =>
+  deadline.value.toLocaleDateString('es-EC', { day: 'numeric', month: 'long' })
+
+onMounted(() => load())
+
+function openCheckout() {
   error.value = ''
   boxConfig.value = null
   showModal.value = true
@@ -33,9 +32,9 @@ function openCheckout(plan: 'annual' | 'monthly') {
   // Pixel: AddToCart al abrir el popup de pago
   if (typeof fbq !== 'undefined') {
     fbq('track', 'AddToCart', {
-      content_name: 'Quema Grasa, Construye Músculo',
+      content_name: 'Reto 3 meses - Metodo SK',
       content_type: 'product',
-      value: plan === 'annual' ? annualPrice : monthlyPrice,
+      value: currentPrice.value,
       currency: 'USD',
     })
   }
@@ -50,10 +49,7 @@ async function payWithCard(payload: { email: string; name: string; lastName: str
   loading.value = true
   error.value = ''
   try {
-    const { data } = await paymentService.prepareBox({
-      ...payload,
-      plan: selectedPlan.value,
-    })
+    const { data } = await paymentService.prepareBox(payload)
     boxConfig.value = data.data
   } catch (err: unknown) {
     const e = err as { message?: string }
@@ -67,84 +63,64 @@ function onBoxError(message: string) {
   error.value = message
 }
 </script>
-
 <template>
   <section id="planes" class="plans">
     <div class="plans__inner">
-      <span class="eyebrow eyebrow--green">Elige tu compromiso</span>
-      <h2 class="plans__title display-lg">Planes de la comunidad</h2>
+      <span class="eyebrow eyebrow--green">Un solo pago</span>
+      <h2 class="plans__title display-lg">El reto de 3 meses</h2>
       <p class="plans__lede">
-        Precio especial de preventa por tiempo limitado. Ambos planes incluyen acceso completo a la comunidad.
+        <template v-if="isPresale">
+          Precio de preventa hasta el {{ deadlineLabel() }}. Después sube a USD {{ regularPrice }}.
+        </template>
+        <template v-else>
+          Pago único. Acceso completo durante {{ accessMonths }} meses.
+        </template>
       </p>
 
-      <div class="plans__grid">
+      <div class="plans__grid plans__grid--single">
         <article class="plan-card plan-card--featured">
-          <div class="plan-card__badge">Mejor valor</div>
-          <h3 class="plan-card__name">Anual</h3>
-          <p class="plan-card__description">Un año completo de acompañamiento. Paga una vez y asegura tu transformación.</p>
+          <div v-if="isPresale" class="plan-card__badge">Preventa</div>
+          <h3 class="plan-card__name">Reto {{ accessMonths }} meses</h3>
+          <p class="plan-card__description">
+            Un solo pago. Entras al reto completo con acompañamiento, entrenamientos y comunidad.
+          </p>
           <div class="plan-card__price">
             <span class="plan-card__currency">$</span>
-            <span class="plan-card__amount">{{ annualPrice }}</span>
-            <span class="plan-card__period">/año</span>
+            <span class="plan-card__amount">{{ currentPrice }}</span>
+            <span class="plan-card__period">pago único</span>
           </div>
+          <p v-if="isPresale" class="plan-card__compare">
+            Antes <s>USD {{ regularPrice }}</s> — ahorras USD {{ savings }}
+          </p>
           <ul class="plan-card__features">
-            <li><i class="fa-solid fa-check" /> Acceso 12 meses</li>
+            <li><i class="fa-solid fa-check" /> Acceso {{ accessMonths }} meses</li>
             <li><i class="fa-solid fa-check" /> Entrenamientos personalizados</li>
             <li><i class="fa-solid fa-check" /> Plan nutricional flexible</li>
             <li><i class="fa-solid fa-check" /> Comunidad privada</li>
           </ul>
-          <button type="button" class="plan-card__button plan-card__button--primary" :disabled="loading" @click="openCheckout('annual')">
+          <button
+            type="button"
+            class="plan-card__button plan-card__button--primary"
+            :disabled="loading"
+            @click="openCheckout()"
+          >
             <span v-if="loading">Preparando pago...</span>
             <span v-else>Pagar con tarjeta</span>
           </button>
-          <RouterLink :to="{ name: 'home', hash: '#video' }" class="plan-card__link">
-            Saber más sobre el año
-          </RouterLink>
-          <p v-if="error" class="plan-card__error">{{ error }}</p>
-        </article>
-
-        <article class="plan-card" :class="{ 'plan-card--disabled': !isMonthlyAvailable }">
-          <div v-if="!isMonthlyAvailable" class="plan-card__badge plan-card__badge--soon">
-            Desde el 16 de julio
-          </div>
-          <h3 class="plan-card__name">Mensual</h3>
-          <p class="plan-card__description">Flexibilidad mensual con renovación automática. Ideal para empezar.</p>
-          <div class="plan-card__price">
-            <span class="plan-card__currency">$</span>
-            <span class="plan-card__amount">{{ monthlyPrice }}</span>
-            <span class="plan-card__period">/mes</span>
-          </div>
-          <ul class="plan-card__features">
-            <li><i class="fa-solid fa-check" /> Acceso mensual</li>
-            <li><i class="fa-solid fa-check" /> Entrenamientos personalizados</li>
-            <li><i class="fa-solid fa-check" /> Plan nutricional flexible</li>
-            <li><i class="fa-solid fa-check" /> Comunidad privada</li>
-          </ul>
-          <a
-            v-if="isMonthlyAvailable"
-            :href="whatsappUrl"
-            target="_blank"
-            rel="noopener"
-            class="plan-card__button plan-card__button--outline"
-          >
-            Escribir por WhatsApp
+          <a :href="whatsappUrl" target="_blank" rel="noopener" class="plan-card__link">
+            Tengo una pregunta antes de pagar
           </a>
-          <button
-            v-else
-            type="button"
-            class="plan-card__button plan-card__button--outline"
-            disabled
-          >
-            No disponible hasta el 16 de julio
-          </button>
+          <p v-if="error" class="plan-card__error">{{ error }}</p>
         </article>
       </div>
     </div>
 
     <CheckoutModal
       :open="showModal"
-      :plan="selectedPlan"
-      :price="selectedPlan === 'annual' ? annualPrice : monthlyPrice"
+      :price="currentPrice"
+      :regular-price="regularPrice"
+      :is-presale="isPresale"
+      :access-months="accessMonths"
       :loading="loading"
       :error="error"
       :box-config="boxConfig"
@@ -179,6 +155,22 @@ function onBoxError(message: string) {
   color: $lpb-muted;
   max-width: 60ch;
   margin: 1rem auto 3rem;
+}
+
+.plans__grid--single {
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.plan-card__compare {
+  font-family: $font-sans;
+  font-size: 0.9rem;
+  color: $lpb-muted;
+  margin: -0.5rem 0 0;
+
+  s {
+    opacity: 0.7;
+  }
 }
 
 .plans__grid {
