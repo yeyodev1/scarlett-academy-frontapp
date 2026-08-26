@@ -7,7 +7,10 @@ defineProps<{
   isFoundingMember: boolean
   accessUntilLabel: string
   accessUntilDate: Date | null
-  annualPrice: number
+  price: number
+  regularPrice: number
+  isPresale: boolean
+  accessMonths: number
 }>()
 
 const emit = defineEmits<{
@@ -20,7 +23,7 @@ const emit = defineEmits<{
     <div class="hero__main">
       <div class="hero__badge-group">
         <span class="hero__plan-badge">{{ planLabel }}</span>
-        <span v-if="isFoundingMember" class="hero__founder-badge">Fundador</span>
+        <span v-if="isFoundingMember" class="hero__founder-badge">Fundadora</span>
       </div>
       <h2 class="hero__access">Acceso hasta {{ accessUntilLabel }}</h2>
       <p class="hero__status">
@@ -34,10 +37,15 @@ const emit = defineEmits<{
 
   <section v-else class="hero">
     <div class="hero__main">
-      <h2 class="hero__access">Elige tu plan</h2>
+      <h2 class="hero__access">Entra al reto</h2>
       <p class="hero__status">
-        Precio especial de preventa. <strong>Plan Anual — USD {{ annualPrice }}</strong> por 12 meses.
-        Valor regular: <strong>USD 470</strong>.
+        <template v-if="isPresale">
+          Precio de preventa: <strong>USD {{ price }}</strong> por {{ accessMonths }} meses.
+          Valor regular: <strong>USD {{ regularPrice }}</strong>.
+        </template>
+        <template v-else>
+          Pago único de <strong>USD {{ price }}</strong> por {{ accessMonths }} meses de acceso.
+        </template>
       </p>
       <button class="hero__cta" @click="emit('go-to-payment-page')">
         Ver formas de pago

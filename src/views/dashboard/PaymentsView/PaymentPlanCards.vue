@@ -1,109 +1,69 @@
 <script setup lang="ts">
 defineProps<{
   loading: boolean
-  isMonthlyAvailable: boolean
-  monthlyPrice: number
-  annualPrice: number
+  /** Precio vigente en dólares. */
+  price: number
+  regularPrice: number
+  isPresale: boolean
+  accessMonths: number
 }>()
 
 const emit = defineEmits<{
-  (e: 'pay-monthly'): void
-  (e: 'pay-annual'): void
+  (e: 'pay'): void
   (e: 'open-transfer'): void
 }>()
 </script>
 
 <template>
   <section class="plans">
-    <h3 class="plans__title">Planes disponibles</h3>
-    <div class="plans__grid">
-      <div class="plan" :class="{ 'plan--soon': !isMonthlyAvailable }">
-        <div v-if="!isMonthlyAvailable" class="plan__badge plan__badge--soon">
-          Desde el 16 de julio
-        </div>
-        <div v-else class="plan__badge plan__badge--simple">Flexible</div>
-
-        <div class="plan__header">
-          <span class="plan__name">Mensualidad</span>
-        </div>
-        <div class="plan__pricing">
-          <span class="plan__price">USD {{ monthlyPrice }}</span>
-          <span class="plan__period">/ mes</span>
-        </div>
-        <p class="plan__desc">Acceso por 1 mes. Renovable cuando lo necesites.</p>
-        <div class="plan__values">
-          <span class="plan__regular">Valor regular: USD 47/mes</span>
-        </div>
-        <button
-          v-if="isMonthlyAvailable"
-          class="plan__cta"
-          :disabled="loading"
-          @click="emit('pay-monthly')"
-        >
-          {{ loading ? 'Preparando…' : 'Pagar mensualidad' }}
-        </button>
-        <button v-else class="plan__cta plan__cta--disabled" disabled>
-          No disponible hasta el 16 de julio
-        </button>
-      </div>
-
+    <h3 class="plans__title">El reto</h3>
+    <div class="plans__grid plans__grid--single">
       <div class="plan plan--featured">
-        <div class="plan__badge plan__badge--featured">Recomendado</div>
+        <div v-if="isPresale" class="plan__badge plan__badge--featured">Preventa</div>
 
         <div class="plan__header">
-          <span class="plan__name">Anualidad</span>
+          <span class="plan__name">Reto {{ accessMonths }} meses</span>
         </div>
         <div class="plan__pricing">
-          <span class="plan__price plan__price--big">USD {{ annualPrice }}</span>
-          <span class="plan__year">/ año</span>
+          <span class="plan__price plan__price--big">USD {{ price }}</span>
+          <span class="plan__year">pago único</span>
         </div>
 
-        <div class="plan__deal">
-          <div class="plan__deal-icon">
-            <i class="fa-solid fa-arrow-right-arrow-left" />
-          </div>
-          <div class="plan__deal-cols">
-            <div class="plan__deal-col">
-              <span class="plan__deal-label">Pagas</span>
-              <span class="plan__deal-value">6 meses</span>
-            </div>
-            <div class="plan__deal-arrow"><i class="fa-solid fa-arrow-right-long" /></div>
-            <div class="plan__deal-col">
-              <span class="plan__deal-label">Recibes</span>
-              <span class="plan__deal-value plan__deal-value--highlight">12 meses</span>
-            </div>
-          </div>
-        </div>
+        <p class="plan__desc">
+          Acceso completo durante {{ accessMonths }} meses desde que se aprueba tu pago.
+        </p>
 
-        <div class="plan__compare">
+        <div v-if="isPresale" class="plan__compare">
           <div class="plan__compare-row">
             <span class="plan__compare-label">Valor regular</span>
-            <span class="plan__compare-old">USD 470</span>
+            <span class="plan__compare-old">USD {{ regularPrice }}</span>
           </div>
           <div class="plan__compare-row">
             <span class="plan__compare-label">Precio preventa</span>
-            <span class="plan__compare-new">USD {{ annualPrice }}</span>
+            <span class="plan__compare-new">USD {{ price }}</span>
           </div>
           <div class="plan__compare-divider" />
           <div class="plan__compare-row plan__compare-row--total">
             <span class="plan__compare-label">Ahorras</span>
-            <span class="plan__compare-save">USD {{ 470 - annualPrice }}</span>
+            <span class="plan__compare-save">USD {{ regularPrice - price }}</span>
           </div>
         </div>
 
         <div class="plan__methods">
-          <button class="plan__method plan__method--card" :disabled="loading" @click="emit('pay-annual')">
+          <button class="plan__method plan__method--card" :disabled="loading" @click="emit('pay')">
             <i class="fa-regular fa-credit-card" />
             <div class="plan__method-body">
-              <span class="plan__method-title">Pago automático</span>
+              <span class="plan__method-title">
+                {{ loading ? 'Preparando…' : 'Pago con tarjeta' }}
+              </span>
               <span class="plan__method-hint">Acceso inmediato</span>
             </div>
           </button>
-          <button type="button" class="plan__method plan__method--whatsapp" @click="emit('open-transfer')">
-            <i class="fa-brands fa-whatsapp" />
+          <button class="plan__method" :disabled="loading" @click="emit('open-transfer')">
+            <i class="fa-solid fa-building-columns" />
             <div class="plan__method-body">
               <span class="plan__method-title">Transferencia bancaria</span>
-              <span class="plan__method-hint">Verificación hasta 24 horas</span>
+              <span class="plan__method-hint">Te guiamos por WhatsApp</span>
             </div>
           </button>
         </div>
@@ -125,6 +85,10 @@ const emit = defineEmits<{
   font-weight: 400;
   color: $lpb-black;
   margin: 0;
+}
+
+.plans__grid--single {
+  max-width: 520px;
 }
 
 .plans__grid {

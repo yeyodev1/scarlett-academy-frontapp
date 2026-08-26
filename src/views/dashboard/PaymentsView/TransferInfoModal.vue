@@ -1,7 +1,10 @@
 <script setup lang="ts">
 defineProps<{
   show: boolean
-  annualPrice: number
+  price: number
+  regularPrice: number
+  isPresale: boolean
+  accessMonths: number
 }>()
 
 const emit = defineEmits<{
@@ -26,19 +29,19 @@ const emit = defineEmits<{
           <div class="tmodal__body">
             <div class="tmodal__detail">
               <span class="tmodal__label">Plan</span>
-              <span class="tmodal__value">Anual completo (12 meses)</span>
+              <span class="tmodal__value">Reto de {{ accessMonths }} meses</span>
             </div>
             <div class="tmodal__detail">
               <span class="tmodal__label">Pagas</span>
-              <span class="tmodal__value">USD {{ annualPrice }} (6 meses)</span>
+              <span class="tmodal__value">USD {{ price }} (pago único)</span>
             </div>
             <div class="tmodal__detail">
               <span class="tmodal__label">Recibes</span>
-              <span class="tmodal__value tmodal__value--highlight">12 meses de acceso</span>
+              <span class="tmodal__value tmodal__value--highlight">{{ accessMonths }} meses de acceso</span>
             </div>
             <div class="tmodal__detail">
-              <span class="tmodal__label">Valor regular 12 meses</span>
-              <span class="tmodal__value"><span class="tmodal__strike">USD 470</span></span>
+              <span class="tmodal__label">Valor regular</span>
+              <span class="tmodal__value"><span class="tmodal__strike">USD {{ regularPrice }}</span></span>
             </div>
             <div class="tmodal__detail">
               <span class="tmodal__label">Descuento</span>

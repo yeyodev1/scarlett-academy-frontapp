@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { paymentService } from '@/services/paymentService'
+import { usePricing } from '@/composables/usePricing'
 import ConfirmModal from '@/components/ui/ConfirmModal.vue'
 import PaymentAlerts from './PaymentAlerts.vue'
 import PaymentHero from './PaymentHero.vue'
@@ -25,14 +26,10 @@ const showTransferModal = ref(false)
 
 const history = ref<PaymentItem[]>([])
 
-const monthlyPrice = Number(import.meta.env.VITE_MONTHLY_PRICE) || 47
-const annualPrice = Number(import.meta.env.VITE_ANNUAL_PRICE) || 297
 const whatsappNumber = (import.meta.env.VITE_ADMIN_WHATSAPP as string) || '593992019807'
-const launchDeadline = (import.meta.env.VITE_LAUNCH_DEADLINE as string) || '2026-07-16T00:00:00-05:00'
 
-const isMonthlyAvailable = computed(() => {
-  return new Date().getTime() >= new Date(launchDeadline).getTime()
-})
+// Precio único del reto, resuelto por el backend.
+const { load: loadPricing, currentPrice, regularPrice, isPresale, accessMonths } = usePricing()
 
 const isActive = computed(() => {
   if (!userStore.accessUntil) return false
@@ -54,7 +51,8 @@ const currentPlan = computed(() => {
 })
 
 const planLabel = computed(() => {
-  if (userStore.foundingMember) return 'Miembro Fundador'
+  if (userStore.foundingMember) return 'Miembro Fundadora'
+  if (currentPlan.value === 'reto') return `Reto ${accessMonths.value} meses`
   if (currentPlan.value === 'annual') return 'Plan Anual'
   if (currentPlan.value === 'monthly') return 'Plan Mensual'
   return 'Sin plan activo'
@@ -95,27 +93,15 @@ async function loadHistory() {
   }
 }
 
-async function payMonthly() {
-  await initiatePayment('monthly')
-}
-
-async function payAnnual() {
-  await initiatePayment('annual')
-}
-
-async function initiatePayment(plan: 'monthly' | 'annual') {
+async function initiatePayment() {
   loading.value = true
   error.value = ''
   try {
-    const payload = {
+    const { data } = await paymentService.prepare({
       email: userStore.email || '',
       name: userStore.name || '',
       lastName: userStore.lastName || '',
-    }
-    const { data } =
-      plan === 'monthly'
-        ? await paymentService.prepareMonthly(payload)
-        : await paymentService.prepareAnnual(payload)
+    })
 
     const payUrl = data.data.payWithCard
     if (payUrl) {
@@ -183,7 +169,10 @@ function goToWhatsApp() {
   closeTransferModal()
 }
 
-onMounted(loadHistory)
+onMounted(() => {
+  loadPricing()
+  loadHistory()
+})
 </script>
 
 <template>
@@ -196,7 +185,10 @@ onMounted(loadHistory)
       :is-founding-member="userStore.foundingMember"
       :access-until-label="accessUntilLabel"
       :access-until-date="accessUntilDate"
-      :annual-price="annualPrice"
+      :price="currentPrice"
+      :regular-price="regularPrice"
+      :is-presale="isPresale"
+      :access-months="accessMonths"
       @go-to-payment-page="goToPaymentPage"
     />
 
@@ -209,11 +201,11 @@ onMounted(loadHistory)
     <PaymentPlanCards
       v-if="!isActive"
       :loading="loading"
-      :is-monthly-available="isMonthlyAvailable"
-      :monthly-price="monthlyPrice"
-      :annual-price="annualPrice"
-      @pay-monthly="payMonthly"
-      @pay-annual="payAnnual"
+      :price="currentPrice"
+      :regular-price="regularPrice"
+      :is-presale="isPresale"
+      :access-months="accessMonths"
+      @pay="initiatePayment"
       @open-transfer="openTransferModal"
     />
 
@@ -251,7 +243,10 @@ onMounted(loadHistory)
 
     <TransferInfoModal
       :show="showTransferModal"
-      :annual-price="annualPrice"
+      :price="currentPrice"
+      :regular-price="regularPrice"
+      :is-presale="isPresale"
+      :access-months="accessMonths"
       @confirm="goToWhatsApp"
       @cancel="closeTransferModal"
     />

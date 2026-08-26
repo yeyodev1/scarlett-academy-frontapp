@@ -93,11 +93,11 @@ function onSubmit() {
       <div class="admin-modal__grid">
         <label class="admin-modal__field">
           <span class="admin-modal__label">Nombre</span>
-          <input v-model="form.name" type="text" class="admin-modal__input" placeholder="Ej. Scarlett" required />
+          <input v-model="form.name" type="text" class="admin-modal__input" placeholder="Ej. María" required />
         </label>
         <label class="admin-modal__field">
           <span class="admin-modal__label">Apellido</span>
-          <input v-model="form.lastName" type="text" class="admin-modal__input" placeholder="Ej. Pita" required />
+          <input v-model="form.lastName" type="text" class="admin-modal__input" placeholder="Ej. Pérez" required />
         </label>
       </div>
       <label class="admin-modal__field">

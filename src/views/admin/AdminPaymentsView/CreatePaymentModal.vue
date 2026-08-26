@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, watch, computed } from 'vue'
 import AdminModal from '@/components/admin/AdminModal.vue'
+import { usePricing } from '@/composables/usePricing'
 import { adminService, type AdminUser } from '@/services/adminService'
 
 const props = defineProps<{
@@ -13,8 +14,8 @@ const emit = defineEmits<{
   (e: 'submit', payload: FormData): void
 }>()
 
-const monthlyPrice = Number(import.meta.env.VITE_MONTHLY_PRICE) || 47
-const annualPrice = Number(import.meta.env.VITE_ANNUAL_PRICE) || 297
+// El precio del reto lo resuelve el backend (preventa vs regular).
+const { load: loadPricing, currentPrice, accessMonths } = usePricing()
 
 const error = ref('')
 const searchResults = ref<AdminUser[]>([])
@@ -22,16 +23,19 @@ const previewUrl = ref<string | null>(null)
 
 const form = reactive({
   userId: '',
-  plan: 'monthly' as 'monthly' | 'annual',
-  amount: monthlyPrice,
+  plan: 'reto' as 'reto' | 'monthly' | 'annual',
+  amount: 0,
   notes: '',
   receipt: null as File | null,
 })
 
-const planOptions = [
-  { value: 'monthly', label: 'Mensual', description: 'Acceso por 1 mes' },
-  { value: 'annual', label: 'Anual', description: 'Acceso por 12 meses' },
-]
+const planOptions = computed(() => [
+  {
+    value: 'reto',
+    label: 'Reto',
+    description: `Acceso por ${accessMonths.value} meses`,
+  },
+])
 
 const selectedStudent = computed(() => searchResults.value.find((s) => s.id === form.userId))
 
@@ -54,8 +58,8 @@ function formatDate(iso: string) {
 
 function reset() {
   form.userId = ''
-  form.plan = 'monthly'
-  form.amount = monthlyPrice
+  form.plan = 'reto'
+  form.amount = currentPrice.value
   form.notes = ''
   form.receipt = null
   searchResults.value = []
@@ -66,16 +70,11 @@ function reset() {
   error.value = ''
 }
 
-watch(() => props.open, (open) => {
-  if (open) reset()
+watch(() => props.open, async (open) => {
+  if (!open) return
+  await loadPricing()
+  reset()
 })
-
-watch(
-  () => form.plan,
-  (plan) => {
-    form.amount = plan === 'annual' ? annualPrice : monthlyPrice
-  },
-)
 
 async function searchStudents(query: string) {
   if (!query.trim()) {
@@ -202,12 +201,12 @@ async function onSubmit() {
           type="button"
           class="admin-payments__plan-option"
           :class="{ 'admin-payments__plan-option--active': form.plan === opt.value }"
-          @click="form.plan = opt.value as 'monthly' | 'annual'"
+          @click="form.plan = opt.value as 'reto' | 'monthly' | 'annual'"
         >
           <span class="admin-payments__plan-option-name">{{ opt.label }}</span>
           <span class="admin-payments__plan-option-desc">{{ opt.description }}</span>
           <span class="admin-payments__plan-option-price">
-            USD {{ opt.value === 'annual' ? annualPrice : monthlyPrice }}
+            USD {{ currentPrice }}
           </span>
         </button>
       </div>

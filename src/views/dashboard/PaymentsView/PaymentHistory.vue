@@ -1,7 +1,7 @@
 <script setup lang="ts">
 export interface PaymentItem {
   id: string
-  plan: 'monthly' | 'annual'
+  plan: 'reto' | 'monthly' | 'annual'
   amount: number
   status: string
   createdAt: string

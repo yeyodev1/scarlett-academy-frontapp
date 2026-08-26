@@ -81,7 +81,7 @@ export interface Recipe {
 
 export interface Subscription {
   status: 'none' | 'pending' | 'active'
-  plan: 'monthly' | 'annual' | null
+  plan: 'reto' | 'monthly' | 'annual' | null
   startedAt: string | null
   expiresAt: string | null
   amount: number | null
