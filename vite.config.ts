@@ -5,9 +5,14 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    port: 5173,
+    strictPort: true,
+    // Hosts servidos a través del túnel cloudflared.
     allowedHosts: [
+      'dev-project-front.bakano.ec',
+      '.trycloudflare.com',
       'testing-storybrand-frontend.bakano.ec',
-    ]
+    ],
   },
   css: {
     preprocessorOptions: {
