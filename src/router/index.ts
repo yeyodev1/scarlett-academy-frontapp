@@ -21,7 +21,7 @@ const OG_IMAGE =
   'https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg'
 
 const BRAND_TITLE =
-  'Scarlett Cordova | Quema Grasa, Construye Músculo'
+  'Método SK | Quema Grasa, Construye Músculo'
 const BRAND_DESC =
   'Tu espacio digital para dominar nutrición, macros y entrenamiento con ciencia, estrategia y amor propio.'
 
@@ -45,11 +45,11 @@ const routes: RouteRecordRaw[] = [
     name: 'privacy-policy',
     component: () => import('@/views/PrivacyPolicyView.vue'),
     meta: {
-      title: 'Políticas de Privacidad | Scarlett Cordova',
+      title: 'Políticas de Privacidad | Método SK',
       description:
-        'Cómo Scarlett Cordova trata los datos personales recogidos en metodosk.ec.',
+        'Cómo Método SK trata los datos personales recogidos en metodosk.ec.',
       canonical: `${SITE}/politicas-privacidad`,
-      ogTitle: 'Políticas de Privacidad | Scarlett Cordova',
+      ogTitle: 'Políticas de Privacidad | Método SK',
       ogDescription: 'Tratamiento y protección de datos personales en metodosk.ec.',
       ogUrl: `${SITE}/politicas-privacidad`,
       ogImage: OG_IMAGE,
@@ -60,10 +60,10 @@ const routes: RouteRecordRaw[] = [
     name: 'legal-notice',
     component: () => import('@/views/LegalNoticeView.vue'),
     meta: {
-      title: 'Aviso Legal | Scarlett Cordova',
+      title: 'Aviso Legal | Método SK',
       description: 'Términos de uso del sitio metodosk.ec.',
       canonical: `${SITE}/aviso-legal`,
-      ogTitle: 'Aviso Legal | Scarlett Cordova',
+      ogTitle: 'Aviso Legal | Método SK',
       ogDescription: 'Términos de uso del sitio metodosk.ec.',
       ogUrl: `${SITE}/aviso-legal`,
       ogImage: OG_IMAGE,
@@ -74,10 +74,10 @@ const routes: RouteRecordRaw[] = [
     name: 'login',
     component: () => import('@/views/LoginView.vue'),
     meta: {
-      title: 'Iniciar sesión | Scarlett Cordova',
+      title: 'Iniciar sesión | Método SK',
       description: 'Accede a tu cuenta para unirte a la comunidad anual de transformación corporal.',
       canonical: `${SITE}/login`,
-      ogTitle: 'Iniciar sesión | Scarlett Cordova',
+      ogTitle: 'Iniciar sesión | Método SK',
       ogDescription: 'Accede a tu cuenta para unirte a la comunidad anual de transformación corporal.',
       ogUrl: `${SITE}/login`,
       ogImage: OG_IMAGE,
@@ -88,10 +88,10 @@ const routes: RouteRecordRaw[] = [
     name: 'register',
     component: () => import('@/views/RegisterView.vue'),
     meta: {
-      title: 'Crear cuenta | Scarlett Cordova',
+      title: 'Crear cuenta | Método SK',
       description: 'Crea tu cuenta y asegura tu cupo en la comunidad anual cerrada.',
       canonical: `${SITE}/registro`,
-      ogTitle: 'Crear cuenta | Scarlett Cordova',
+      ogTitle: 'Crear cuenta | Método SK',
       ogDescription: 'Crea tu cuenta y asegura tu cupo en la comunidad anual cerrada.',
       ogUrl: `${SITE}/registro`,
       ogImage: OG_IMAGE,
@@ -102,10 +102,10 @@ const routes: RouteRecordRaw[] = [
     name: 'verify-email',
     component: () => import('@/views/VerifyEmailView.vue'),
     meta: {
-      title: 'Verificar email | Scarlett Cordova',
+      title: 'Verificar email | Método SK',
       description: 'Confirma tu correo para activar tu cuenta.',
       canonical: `${SITE}/verificar-email`,
-      ogTitle: 'Verificar email | Scarlett Cordova',
+      ogTitle: 'Verificar email | Método SK',
       ogDescription: 'Confirma tu correo para activar tu cuenta.',
       ogUrl: `${SITE}/verificar-email`,
       ogImage: OG_IMAGE,
@@ -116,10 +116,10 @@ const routes: RouteRecordRaw[] = [
     name: 'forgot-password',
     component: () => import('@/views/ForgotPasswordView.vue'),
     meta: {
-      title: 'Recuperar contraseña | Scarlett Cordova',
+      title: 'Recuperar contraseña | Método SK',
       description: 'Recupera el acceso a tu cuenta.',
       canonical: `${SITE}/recuperar-contrasena`,
-      ogTitle: 'Recuperar contraseña | Scarlett Cordova',
+      ogTitle: 'Recuperar contraseña | Método SK',
       ogDescription: 'Recupera el acceso a tu cuenta.',
       ogUrl: `${SITE}/recuperar-contrasena`,
       ogImage: OG_IMAGE,
@@ -130,10 +130,10 @@ const routes: RouteRecordRaw[] = [
     name: 'reset-password',
     component: () => import('@/views/ResetPasswordView.vue'),
     meta: {
-      title: 'Restablecer contraseña | Scarlett Cordova',
+      title: 'Restablecer contraseña | Método SK',
       description: 'Crea una nueva contraseña para tu cuenta.',
       canonical: `${SITE}/restablecer-contrasena`,
-      ogTitle: 'Restablecer contraseña | Scarlett Cordova',
+      ogTitle: 'Restablecer contraseña | Método SK',
       ogDescription: 'Crea una nueva contraseña para tu cuenta.',
       ogUrl: `${SITE}/restablecer-contrasena`,
       ogImage: OG_IMAGE,
@@ -144,11 +144,11 @@ const routes: RouteRecordRaw[] = [
     name: 'payment-result',
     component: () => import('@/views/PaymentResultView.vue'),
     meta: {
-      title: 'Confirmación de pago | Scarlett Cordova',
-      description: 'Resultado de tu pago en la comunidad anual Scarlett Cordova.',
+      title: 'Confirmación de pago | Método SK',
+      description: 'Resultado de tu pago en la comunidad anual Método SK.',
       canonical: `${SITE}/pago/confirmar`,
-      ogTitle: 'Confirmación de pago | Scarlett Cordova',
-      ogDescription: 'Resultado de tu pago en la comunidad anual Scarlett Cordova.',
+      ogTitle: 'Confirmación de pago | Método SK',
+      ogDescription: 'Resultado de tu pago en la comunidad anual Método SK.',
       ogUrl: `${SITE}/pago/confirmar`,
       ogImage: OG_IMAGE,
     } satisfies RouteMeta,
@@ -158,11 +158,11 @@ const routes: RouteRecordRaw[] = [
     name: 'pay-response',
     component: () => import('@/views/PaymentResultView.vue'),
     meta: {
-      title: 'Confirmación de pago | Scarlett Cordova',
-      description: 'Resultado de tu pago en la comunidad anual Scarlett Cordova.',
+      title: 'Confirmación de pago | Método SK',
+      description: 'Resultado de tu pago en la comunidad anual Método SK.',
       canonical: `${SITE}/pay-response`,
-      ogTitle: 'Confirmación de pago | Scarlett Cordova',
-      ogDescription: 'Resultado de tu pago en la comunidad anual Scarlett Cordova.',
+      ogTitle: 'Confirmación de pago | Método SK',
+      ogDescription: 'Resultado de tu pago en la comunidad anual Método SK.',
       ogUrl: `${SITE}/pay-response`,
       ogImage: OG_IMAGE,
     } satisfies RouteMeta,
@@ -177,10 +177,10 @@ const routes: RouteRecordRaw[] = [
         name: 'dashboard',
         component: () => import('@/views/dashboard/DashboardView.vue'),
         meta: {
-          title: 'Mi cuenta | Scarlett Cordova',
+          title: 'Mi cuenta | Método SK',
           description: 'Tu espacio personal de aprendizaje y transformación.',
           canonical: `${SITE}/app`,
-          ogTitle: 'Mi cuenta | Scarlett Cordova',
+          ogTitle: 'Mi cuenta | Método SK',
           ogDescription: 'Tu espacio personal de aprendizaje y transformación.',
           ogUrl: `${SITE}/app`,
           ogImage: OG_IMAGE,
@@ -191,10 +191,10 @@ const routes: RouteRecordRaw[] = [
         name: 'courses',
         component: () => import('@/views/dashboard/CoursesView.vue'),
         meta: {
-          title: 'Mis cursos | Scarlett Cordova',
+          title: 'Mis cursos | Método SK',
           description: 'Todos tus cursos disponibles.',
           canonical: `${SITE}/app/cursos`,
-          ogTitle: 'Mis cursos | Scarlett Cordova',
+          ogTitle: 'Mis cursos | Método SK',
           ogDescription: 'Todos tus cursos disponibles.',
           ogUrl: `${SITE}/app/cursos`,
           ogImage: OG_IMAGE,
@@ -205,10 +205,10 @@ const routes: RouteRecordRaw[] = [
         name: 'course-detail',
         component: () => import('@/views/dashboard/CourseDetailView.vue'),
         meta: {
-          title: 'Curso | Scarlett Cordova',
+          title: 'Curso | Método SK',
           description: 'Contenido del curso.',
           canonical: `${SITE}/app/cursos`,
-          ogTitle: 'Curso | Scarlett Cordova',
+          ogTitle: 'Curso | Método SK',
           ogDescription: 'Contenido del curso.',
           ogUrl: `${SITE}/app/cursos`,
           ogImage: OG_IMAGE,
@@ -219,10 +219,10 @@ const routes: RouteRecordRaw[] = [
         name: 'lesson',
         component: () => import('@/views/dashboard/LessonView.vue'),
         meta: {
-          title: 'Clase | Scarlett Cordova',
+          title: 'Clase | Método SK',
           description: 'Clase en reproducción.',
           canonical: `${SITE}/app/cursos`,
-          ogTitle: 'Clase | Scarlett Cordova',
+          ogTitle: 'Clase | Método SK',
           ogDescription: 'Clase en reproducción.',
           ogUrl: `${SITE}/app/cursos`,
           ogImage: OG_IMAGE,
@@ -233,10 +233,10 @@ const routes: RouteRecordRaw[] = [
         name: 'live-classes',
         component: () => import('@/views/dashboard/LiveClassesView.vue'),
         meta: {
-          title: 'Clases en vivo | Scarlett Cordova',
+          title: 'Clases en vivo | Método SK',
           description: 'Próximas clases en vivo con Luisa.',
           canonical: `${SITE}/app/clases-en-vivo`,
-          ogTitle: 'Clases en vivo | Scarlett Cordova',
+          ogTitle: 'Clases en vivo | Método SK',
           ogDescription: 'Próximas clases en vivo con Luisa.',
           ogUrl: `${SITE}/app/clases-en-vivo`,
           ogImage: OG_IMAGE,
@@ -247,10 +247,10 @@ const routes: RouteRecordRaw[] = [
         name: 'schedule',
         component: () => import('@/views/dashboard/ScheduleView.vue'),
         meta: {
-          title: 'Horario | Scarlett Cordova',
+          title: 'Horario | Método SK',
           description: 'Horario semanal de actividades.',
           canonical: `${SITE}/app/horario`,
-          ogTitle: 'Horario | Scarlett Cordova',
+          ogTitle: 'Horario | Método SK',
           ogDescription: 'Horario semanal de actividades.',
           ogUrl: `${SITE}/app/horario`,
           ogImage: OG_IMAGE,
@@ -261,10 +261,10 @@ const routes: RouteRecordRaw[] = [
         name: 'recipes',
         component: () => import('@/views/dashboard/RecipesView.vue'),
         meta: {
-          title: 'Recetas | Scarlett Cordova',
+          title: 'Recetas | Método SK',
           description: 'Recetas saludables para tu transformación.',
           canonical: `${SITE}/app/recetas`,
-          ogTitle: 'Recetas | Scarlett Cordova',
+          ogTitle: 'Recetas | Método SK',
           ogDescription: 'Recetas saludables para tu transformación.',
           ogUrl: `${SITE}/app/recetas`,
           ogImage: OG_IMAGE,
@@ -275,10 +275,10 @@ const routes: RouteRecordRaw[] = [
         name: 'achievements',
         component: () => import('@/views/dashboard/AchievementsView.vue'),
         meta: {
-          title: 'Logros | Scarlett Cordova',
+          title: 'Logros | Método SK',
           description: 'Tus logros y reconocimientos.',
           canonical: `${SITE}/app/logros`,
-          ogTitle: 'Logros | Scarlett Cordova',
+          ogTitle: 'Logros | Método SK',
           ogDescription: 'Tus logros y reconocimientos.',
           ogUrl: `${SITE}/app/logros`,
           ogImage: OG_IMAGE,
@@ -289,10 +289,10 @@ const routes: RouteRecordRaw[] = [
         name: 'settings',
         component: () => import('@/views/dashboard/SettingsView/index.vue'),
         meta: {
-          title: 'Configuración | Scarlett Cordova',
+          title: 'Configuración | Método SK',
           description: 'Gestiona tu perfil y suscripción.',
           canonical: `${SITE}/app/configuracion`,
-          ogTitle: 'Configuración | Scarlett Cordova',
+          ogTitle: 'Configuración | Método SK',
           ogDescription: 'Gestiona tu perfil y suscripción.',
           ogUrl: `${SITE}/app/configuracion`,
           ogImage: OG_IMAGE,
@@ -303,10 +303,10 @@ const routes: RouteRecordRaw[] = [
         name: 'payments',
         component: () => import('@/views/dashboard/PaymentsView/index.vue'),
         meta: {
-          title: 'Pagos | Scarlett Cordova',
+          title: 'Pagos | Método SK',
           description: 'Gestiona tus pagos y suscripción.',
           canonical: `${SITE}/app/pagos`,
-          ogTitle: 'Pagos | Scarlett Cordova',
+          ogTitle: 'Pagos | Método SK',
           ogDescription: 'Gestiona tus pagos y suscripción.',
           ogUrl: `${SITE}/app/pagos`,
           ogImage: OG_IMAGE,
@@ -328,10 +328,10 @@ const routes: RouteRecordRaw[] = [
         name: 'admin-users',
         component: () => import('@/views/admin/AdminUsersView/index.vue'),
         meta: {
-          title: 'Admin - Usuarios | Scarlett Cordova',
+          title: 'Admin - Usuarios | Método SK',
           description: 'Gestión de usuarios de la academia.',
           canonical: `${SITE}/admin/usuarios`,
-          ogTitle: 'Admin - Usuarios | Scarlett Cordova',
+          ogTitle: 'Admin - Usuarios | Método SK',
           ogDescription: 'Gestión de usuarios de la academia.',
           ogUrl: `${SITE}/admin/usuarios`,
           ogImage: OG_IMAGE,
@@ -356,10 +356,10 @@ const routes: RouteRecordRaw[] = [
         name: 'admin-payments',
         component: () => import('@/views/admin/AdminPaymentsView/index.vue'),
         meta: {
-          title: 'Admin - Pagos | Scarlett Cordova',
+          title: 'Admin - Pagos | Método SK',
           description: 'Gestión de pagos manuales de la academia.',
           canonical: `${SITE}/admin/pagos`,
-          ogTitle: 'Admin - Pagos | Scarlett Cordova',
+          ogTitle: 'Admin - Pagos | Método SK',
           ogDescription: 'Gestión de pagos manuales de la academia.',
           ogUrl: `${SITE}/admin/pagos`,
           ogImage: OG_IMAGE,
@@ -372,10 +372,10 @@ const routes: RouteRecordRaw[] = [
     name: 'no-permission',
     component: () => import('@/views/admin/NoPermissionView.vue'),
     meta: {
-      title: 'Sin permiso | Scarlett Cordova',
+      title: 'Sin permiso | Método SK',
       description: 'No tienes permiso para acceder a esta sección.',
       canonical: `${SITE}/no-permiso`,
-      ogTitle: 'Sin permiso | Scarlett Cordova',
+      ogTitle: 'Sin permiso | Método SK',
       ogDescription: 'No tienes permiso para acceder a esta sección.',
       ogUrl: `${SITE}/no-permiso`,
       ogImage: OG_IMAGE,
@@ -470,8 +470,8 @@ const setCanonical = (href: string) => {
 router.afterEach((to) => {
   const meta = to.meta
   const rebrand = (value: string) => value
-    .replaceAll('Scarlett Cordova Academy', 'Scarlett Cordova')
-    .replaceAll('Scarlett Cordova', 'Scarlett Cordova')
+    .replaceAll('Método SK Academy', 'Método SK')
+    .replaceAll('Método SK', 'Método SK')
     .replaceAll('Luisa', 'Scarlett')
     .replaceAll('metodosk.ec', new URL(SITE).hostname)
     .replaceAll('comunidad anual', 'academia digital')

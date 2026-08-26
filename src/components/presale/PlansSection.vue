@@ -1,14 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import { paymentService } from '@/services/paymentService'
 import type { PaymentBoxConfig } from '@/services/paymentService'
 import { usePricing } from '@/composables/usePricing'
+import CountdownTimer from './CountdownTimer.vue'
 import CheckoutModal from './CheckoutModal.vue'
 
 const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER as string) || '593999999999'
 
-// Precio y ventana de preventa vienen del backend; el cliente nunca los define.
-const { load, currentPrice, regularPrice, isPresale, accessMonths, savings, deadline } = usePricing()
+// Precio, fecha de fin de preventa y duración vienen del backend
+// (GET /api/presale/status). Cuando pasa la fecha, el precio sube solo.
+const {
+  load,
+  currentPrice,
+  regularPrice,
+  isPresale,
+  accessMonths,
+  deadline,
+  pricing,
+} = usePricing()
 
 const loading = ref(false)
 const error = ref('')
@@ -16,11 +27,15 @@ const showModal = ref(false)
 const boxConfig = ref<PaymentBoxConfig | null>(null)
 
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-  'Hola, quiero información sobre el reto de 3 meses.',
+  'Hola, quiero información sobre el reto del Método SK.',
 )}`
 
 const deadlineLabel = () =>
-  deadline.value.toLocaleDateString('es-EC', { day: 'numeric', month: 'long' })
+  deadline.value.toLocaleDateString('es-EC', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
 
 onMounted(() => load())
 
@@ -32,7 +47,7 @@ function openCheckout() {
   // Pixel: AddToCart al abrir el popup de pago
   if (typeof fbq !== 'undefined') {
     fbq('track', 'AddToCart', {
-      content_name: 'Reto 3 meses - Metodo SK',
+      content_name: 'Academia Método SK',
       content_type: 'product',
       value: currentPrice.value,
       currency: 'USD',
@@ -63,26 +78,34 @@ function onBoxError(message: string) {
   error.value = message
 }
 </script>
+
 <template>
   <section id="planes" class="plans">
     <div class="plans__inner">
-      <span class="eyebrow eyebrow--green">Un solo pago</span>
-      <h2 class="plans__title display-lg">El reto de 3 meses</h2>
+      <span class="eyebrow eyebrow--green">Elige tu compromiso</span>
+      <h2 class="plans__title display-lg">Planes de la comunidad</h2>
       <p class="plans__lede">
         <template v-if="isPresale">
-          Precio de preventa hasta el {{ deadlineLabel() }}. Después sube a USD {{ regularPrice }}.
+          Precio especial de preventa por tiempo limitado. Incluye acceso completo a la comunidad.
         </template>
         <template v-else>
-          Pago único. Acceso completo durante {{ accessMonths }} meses.
+          Un solo pago. Incluye acceso completo a la comunidad.
         </template>
       </p>
 
+      <div v-if="isPresale" class="plans__countdown">
+        <span class="plans__countdown-label">
+          La preventa termina el {{ deadlineLabel() }} · después el precio sube a USD {{ regularPrice }}
+        </span>
+        <CountdownTimer :deadline="pricing.deadline" />
+      </div>
+
       <div class="plans__grid plans__grid--single">
         <article class="plan-card plan-card--featured">
-          <div v-if="isPresale" class="plan-card__badge">Preventa</div>
-          <h3 class="plan-card__name">Reto {{ accessMonths }} meses</h3>
+          <div class="plan-card__badge">{{ isPresale ? 'Preventa' : 'Mejor valor' }}</div>
+          <h3 class="plan-card__name">El reto</h3>
           <p class="plan-card__description">
-            Un solo pago. Entras al reto completo con acompañamiento, entrenamientos y comunidad.
+            {{ accessMonths }} meses completos de acompañamiento. Pagas una vez y aseguras tu transformación.
           </p>
           <div class="plan-card__price">
             <span class="plan-card__currency">$</span>
@@ -90,7 +113,7 @@ function onBoxError(message: string) {
             <span class="plan-card__period">pago único</span>
           </div>
           <p v-if="isPresale" class="plan-card__compare">
-            Antes <s>USD {{ regularPrice }}</s> — ahorras USD {{ savings }}
+            Antes <s>USD {{ regularPrice }}</s> — ahorras USD {{ regularPrice - currentPrice }}
           </p>
           <ul class="plan-card__features">
             <li><i class="fa-solid fa-check" /> Acceso {{ accessMonths }} meses</li>
@@ -110,6 +133,9 @@ function onBoxError(message: string) {
           <a :href="whatsappUrl" target="_blank" rel="noopener" class="plan-card__link">
             Tengo una pregunta antes de pagar
           </a>
+          <RouterLink :to="{ name: 'home', hash: '#video' }" class="plan-card__link">
+            Saber más sobre el reto
+          </RouterLink>
           <p v-if="error" class="plan-card__error">{{ error }}</p>
         </article>
       </div>
@@ -160,6 +186,30 @@ function onBoxError(message: string) {
 .plans__grid--single {
   max-width: 480px;
   margin-inline: auto;
+}
+
+.plans__countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 2.5rem;
+}
+
+// El contador está pensado para fondo oscuro; aquí va sobre papel claro.
+.plans__countdown :deep(.countdown__value) {
+  color: $lpb-black;
+}
+
+.plans__countdown :deep(.countdown__label) {
+  color: $lpb-muted;
+}
+
+.plans__countdown-label {
+  font-family: $font-sans;
+  font-size: 0.9rem;
+  color: $lpb-muted;
+  max-width: 46ch;
 }
 
 .plan-card__compare {
