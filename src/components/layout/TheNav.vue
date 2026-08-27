@@ -88,31 +88,37 @@ const logout = () => {
         <div class="nav__content-inner">
           <nav class="nav__links">
             <template v-if="!userStore.isAuthenticated">
-              <RouterLink :to="{ name: 'home', hash: '#planes' }" class="nav__link" @click="close">
-                <span class="nav__num">01</span> El método
+              <RouterLink :to="{ name: 'home', hash: '#ebook' }" class="nav__link" @click="close">
+                <span class="nav__num">01</span> Ebook
+              </RouterLink>
+              <RouterLink :to="{ name: 'home', hash: '#reto' }" class="nav__link" @click="close">
+                <span class="nav__num">02</span> Reto SK
               </RouterLink>
               <RouterLink :to="{ name: 'login' }" class="nav__link" @click="close">
-                <span class="nav__num">02</span> Iniciar sesión
+                <span class="nav__num">03</span> Iniciar sesión
               </RouterLink>
-              <RouterLink :to="{ name: 'register' }" class="nav__cta" @click="close">
-                <span>Registrarse ahora</span>
+              <RouterLink :to="{ name: 'home', hash: '#productos' }" class="nav__cta" @click="close">
+                <span>Ver los dos caminos</span>
                 <i class="fa-solid fa-arrow-right" />
               </RouterLink>
             </template>
             <template v-else>
-              <RouterLink :to="{ name: 'home', hash: '#planes' }" class="nav__link" @click="close">
-                <span class="nav__num">01</span> El método
+              <RouterLink :to="{ name: 'home', hash: '#ebook' }" class="nav__link" @click="close">
+                <span class="nav__num">01</span> Ebook
+              </RouterLink>
+              <RouterLink :to="{ name: 'home', hash: '#reto' }" class="nav__link" @click="close">
+                <span class="nav__num">02</span> Reto SK
               </RouterLink>
               <RouterLink
                 :to="{ name: userStore.role === 'admin' ? 'admin-users' : 'dashboard' }"
                 class="nav__link"
                 @click="close"
               >
-                <span class="nav__num">02</span>
+                <span class="nav__num">03</span>
                 {{ userStore.role === 'admin' ? 'Admin' : 'Mi cuenta' }}
               </RouterLink>
               <button type="button" class="nav__link nav__link--logout" @click="logout">
-                <span class="nav__num">03</span> Cerrar sesión
+                <span class="nav__num">04</span> Cerrar sesión
               </button>
               <RouterLink
                 :to="{ name: userStore.role === 'admin' ? 'admin-users' : 'dashboard' }"
@@ -161,6 +167,17 @@ const logout = () => {
 
   &:not(.nav--scrolled):not(.nav--legal):not(.nav--open) {
     color: $lpb-white;
+
+    // Sin scroll el nav flota sobre la foto del hero, que tiene zonas claras.
+    // Este velo mantiene legibles los enlaces sin cerrar la imagen.
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 220%;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba($lpb-black, 0.62) 0%, rgba($lpb-black, 0) 100%);
+    }
   }
 
   &--scrolled,
@@ -174,6 +191,8 @@ const logout = () => {
 }
 
 .nav__inner {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -298,8 +317,10 @@ const logout = () => {
     font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    color: $lpb-green;
-    background: rgba($lpb-green, 0.1);
+    // Coral puro sobre crema no llegaba a contraste legible: se usa el tono
+    // profundo de la marca sobre un fondo algo más presente.
+    color: $lpb-green-deep;
+    background: rgba($lpb-green, 0.16);
     padding: 0.2rem 0.45rem;
     border-radius: 0.35rem;
     line-height: 1;
