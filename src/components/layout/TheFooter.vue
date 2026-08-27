@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import BrandWordmark from '@/components/ui/BrandWordmark.vue'
-import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/config/site'
+import { INSTAGRAM_URL, INSTAGRAM_HANDLE, buildEbookUrl, buildRetoUrl, EBOOK_PRICE } from '@/config/site'
 
 const year = new Date().getFullYear()
 </script>
@@ -17,14 +17,26 @@ const year = new Date().getFullYear()
         </p>
       </div>
 
+      <!-- Los dos productos, también desde el pie: es la última oportunidad
+           de que el visitante elija sin volver a subir. -->
       <div class="footer__cta">
-        <RouterLink
+        <a
           class="footer__cta-link"
-          :to="{ name: 'register' }"
+          :href="buildRetoUrl('footer')"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <span>Registrarse ahora</span>
-          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-        </RouterLink>
+          <span>Quiero mi cupo en el reto</span>
+          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
+        <a
+          class="footer__cta-alt"
+          :href="buildEbookUrl('footer')"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ebook por ${{ EBOOK_PRICE }} <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
 
@@ -35,6 +47,9 @@ const year = new Date().getFullYear()
         <a :href="INSTAGRAM_URL" target="_blank" rel="noopener" class="footer__link">
           Instagram <em>{{ INSTAGRAM_HANDLE }}</em>
         </a>
+        <RouterLink :to="{ name: 'home', hash: '#ebook' }" class="footer__link">Ebook</RouterLink>
+        <RouterLink :to="{ name: 'home', hash: '#reto' }" class="footer__link">Reto Método SK</RouterLink>
+        <RouterLink :to="{ name: 'login' }" class="footer__link">Entrar a mi cuenta</RouterLink>
         <RouterLink :to="{ name: 'privacy-policy' }" class="footer__link">Políticas de privacidad</RouterLink>
         <RouterLink :to="{ name: 'legal-notice' }" class="footer__link">Aviso legal</RouterLink>
       </nav>
@@ -111,6 +126,27 @@ const year = new Date().getFullYear()
     border-color: $lpb-green;
     transform: translateY(-1px);
   }
+}
+
+.footer__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.footer__cta-alt {
+  font-family: $font-mono;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($lpb-white, 0.6);
+  text-decoration: none;
+
+  &:hover { color: $lpb-gold; }
+
+  i { font-size: 0.62rem; margin-left: 0.35rem; }
 }
 
 .footer__rule {
