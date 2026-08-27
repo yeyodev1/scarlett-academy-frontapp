@@ -1,13 +1,44 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { paymentService } from '@/services/paymentService'
-import type { PaymentBoxConfig } from '@/services/paymentService'
+import { buildRetoUrl } from '@/config/site'
 import { usePricing } from '@/composables/usePricing'
+import { useScrollReveal } from '@/composables/useScrollReveal'
 import CountdownTimer from './CountdownTimer.vue'
-import CheckoutModal from './CheckoutModal.vue'
 
 const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER as string) || '593999999999'
+
+const root = ref<HTMLElement | null>(null)
+useScrollReveal(root, { y: 38, stagger: 0.07 })
+
+/** Los cuatro pilares del reto, numerados como en el resto del sitio. */
+const features = [
+  {
+    title: 'Entrenamiento con progresión',
+    text: 'Plan de casa o gimnasio con cargas que avanzan cada mes. Sabes qué hacer cada día.',
+  },
+  {
+    title: 'Nutrición por Karen López',
+    text: 'Plan flexible armado por nutricionista. Sin dietas imposibles ni alimentos prohibidos.',
+  },
+  {
+    title: 'Clases en vivo y comunidad',
+    text: 'Entrenamos juntas y resuelves dudas en vivo. No es un PDF que abres una vez.',
+  },
+  {
+    title: 'Plataforma con tu progreso',
+    text: 'Cursos, recetas, horario y logros en un solo lugar, con tu avance guardado.',
+  },
+]
+
+/** Lo que entra en el precio — versión corta para la tarjeta. */
+const included = [
+  'Entrenamiento casa o gimnasio',
+  'Plan de nutrición flexible',
+  'Clases en vivo',
+  'Comunidad privada',
+  'Acceso completo a la plataforma',
+]
 
 // Precio, fecha de fin de preventa y duración vienen del backend
 // (GET /api/presale/status). Cuando pasa la fecha, el precio sube solo.
@@ -21,14 +52,12 @@ const {
   pricing,
 } = usePricing()
 
-const loading = ref(false)
-const error = ref('')
-const showModal = ref(false)
-const boxConfig = ref<PaymentBoxConfig | null>(null)
-
 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
   'Hola, quiero información sobre el reto del Método SK.',
 )}`
+
+/** La compra ocurre en metodosk.ec: este sitio solo presenta la oferta. */
+const retoUrl = buildRetoUrl('home-reto')
 
 const deadlineLabel = () =>
   deadline.value.toLocaleDateString('es-EC', {
@@ -39,372 +68,326 @@ const deadlineLabel = () =>
 
 onMounted(() => load())
 
-function openCheckout() {
-  error.value = ''
-  boxConfig.value = null
-  showModal.value = true
-
-  // Pixel: AddToCart al abrir el popup de pago
+/** Pixel: el clic hacia el funnel es el evento de intención de compra. */
+function trackCheckoutIntent() {
   if (typeof fbq !== 'undefined') {
-    fbq('track', 'AddToCart', {
-      content_name: 'Academia Método SK',
+    fbq('track', 'InitiateCheckout', {
+      content_name: 'Reto Método SK',
       content_type: 'product',
       value: currentPrice.value,
       currency: 'USD',
     })
   }
 }
-
-function closeCheckout() {
-  showModal.value = false
-  boxConfig.value = null
-}
-
-async function payWithCard(payload: { email: string; name: string; lastName: string }) {
-  loading.value = true
-  error.value = ''
-  try {
-    const { data } = await paymentService.prepareBox(payload)
-    boxConfig.value = data.data
-  } catch (err: unknown) {
-    const e = err as { message?: string }
-    error.value = e.message || 'Error al preparar el pago.'
-  } finally {
-    loading.value = false
-  }
-}
-
-function onBoxError(message: string) {
-  error.value = message
-}
 </script>
 
 <template>
-  <section id="planes" class="plans">
-    <div class="plans__inner">
-      <span class="eyebrow eyebrow--green">Elige tu compromiso</span>
-      <h2 class="plans__title display-lg">Planes de la comunidad</h2>
-      <p class="plans__lede">
-        <template v-if="isPresale">
-          Precio especial de preventa por tiempo limitado. Incluye acceso completo a la comunidad.
-        </template>
-        <template v-else>
-          Un solo pago. Incluye acceso completo a la comunidad.
-        </template>
-      </p>
+  <section id="reto" ref="root" class="reto sec sec--light">
+    <div class="reto__inner container">
+      <div class="reto__grid">
+        <!-- Columna de contenido -->
+        <div class="reto__content">
+          <span class="sec__eyebrow" data-reveal>Reto Método SK · {{ accessMonths }} meses</span>
 
-      <div v-if="isPresale" class="plans__countdown">
-        <span class="plans__countdown-label">
-          La preventa termina el {{ deadlineLabel() }} · después el precio sube a USD {{ regularPrice }}
-        </span>
-        <CountdownTimer :deadline="pricing.deadline" />
-      </div>
+          <h2 class="reto__title sec__title" data-reveal>
+            Tu cuerpo cambia cuando el plan <span class="accent">tiene método.</span>
+          </h2>
 
-      <div class="plans__grid plans__grid--single">
-        <article class="plan-card plan-card--featured">
-          <div class="plan-card__badge">{{ isPresale ? 'Preventa' : 'Mejor valor' }}</div>
-          <h3 class="plan-card__name">El reto</h3>
-          <p class="plan-card__description">
-            {{ accessMonths }} meses completos de acompañamiento. Pagas una vez y aseguras tu transformación.
+          <p class="reto__lead sec__lead" data-reveal>
+            <template v-if="isPresale">
+              Entrenamiento en casa o en gimnasio y plan de nutrición pensados para
+              {{ accessMonths }} meses. Precio de preventa por tiempo limitado.
+            </template>
+            <template v-else>
+              Entrenamiento en casa o en gimnasio y plan de nutrición pensados para
+              {{ accessMonths }} meses. Un solo pago, acceso completo.
+            </template>
           </p>
-          <div class="plan-card__price">
-            <span class="plan-card__currency">$</span>
-            <span class="plan-card__amount">{{ currentPrice }}</span>
-            <span class="plan-card__period">pago único</span>
-          </div>
-          <p v-if="isPresale" class="plan-card__compare">
-            Antes <s>USD {{ regularPrice }}</s> — ahorras USD {{ regularPrice - currentPrice }}
-          </p>
-          <ul class="plan-card__features">
-            <li><i class="fa-solid fa-check" /> Acceso {{ accessMonths }} meses</li>
-            <li><i class="fa-solid fa-check" /> Entrenamientos personalizados</li>
-            <li><i class="fa-solid fa-check" /> Plan nutricional flexible</li>
-            <li><i class="fa-solid fa-check" /> Comunidad privada</li>
+
+          <ul class="reto__features">
+            <li v-for="(feature, i) in features" :key="feature.title" class="feature" data-reveal>
+              <span class="feature__num num">{{ String(i + 1).padStart(2, '0') }}</span>
+              <div>
+                <h3 class="feature__title">{{ feature.title }}</h3>
+                <p class="feature__text">{{ feature.text }}</p>
+              </div>
+            </li>
           </ul>
-          <button
-            type="button"
-            class="plan-card__button plan-card__button--primary"
-            :disabled="loading"
-            @click="openCheckout()"
-          >
-            <span v-if="loading">Preparando pago...</span>
-            <span v-else>Pagar con tarjeta</span>
-          </button>
-          <a :href="whatsappUrl" target="_blank" rel="noopener" class="plan-card__link">
-            Tengo una pregunta antes de pagar
-          </a>
-          <RouterLink :to="{ name: 'home', hash: '#video' }" class="plan-card__link">
-            Saber más sobre el reto
-          </RouterLink>
-          <p v-if="error" class="plan-card__error">{{ error }}</p>
-        </article>
+
+          <div v-if="isPresale" class="reto__countdown" data-reveal>
+            <span class="reto__countdown-label">
+              La preventa termina el {{ deadlineLabel() }} · después sube a USD {{ regularPrice }}
+            </span>
+            <CountdownTimer :deadline="pricing.deadline" />
+          </div>
+        </div>
+
+        <!-- Tarjeta de precio -->
+        <aside class="reto__aside" data-reveal>
+          <div class="price-card">
+            <span class="price-card__badge badge-lime">
+              {{ isPresale ? 'Preventa activa' : 'Mejor valor' }}
+            </span>
+
+            <p class="price-card__name">El reto completo</p>
+
+            <div class="price-card__price">
+              <span class="price-card__currency">$</span>
+              <span class="price-card__amount">{{ currentPrice }}</span>
+            </div>
+
+            <p class="price-card__period">
+              Pago único · acceso {{ accessMonths }} meses
+            </p>
+
+            <p v-if="isPresale && regularPrice > currentPrice" class="price-card__compare">
+              Antes <s>USD {{ regularPrice }}</s> — ahorras USD {{ regularPrice - currentPrice }}
+            </p>
+
+            <ul class="price-card__list">
+              <li v-for="item in included" :key="item">
+                <span class="price-card__check" aria-hidden="true">✦</span>{{ item }}
+              </li>
+            </ul>
+
+            <a
+              class="price-card__cta"
+              :href="retoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              @click="trackCheckoutIntent"
+            >
+              Quiero mi cupo
+              <span aria-hidden="true">↗</span>
+            </a>
+
+            <div class="price-card__links">
+              <a :href="whatsappUrl" target="_blank" rel="noopener" class="price-card__link">
+                Tengo una pregunta antes de pagar
+              </a>
+              <RouterLink :to="{ name: 'home', hash: '#video' }" class="price-card__link">
+                Saber más sobre el reto
+              </RouterLink>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
-
-    <CheckoutModal
-      :open="showModal"
-      :price="currentPrice"
-      :regular-price="regularPrice"
-      :is-presale="isPresale"
-      :access-months="accessMonths"
-      :loading="loading"
-      :error="error"
-      :box-config="boxConfig"
-      @close="closeCheckout"
-      @submit="payWithCard"
-      @box-error="onBoxError"
-    />
   </section>
 </template>
 
 <style lang="scss" scoped>
-.plans {
-  padding-block: clamp(5rem, 12vw, 9rem);
-  padding-inline: clamp(2.5rem, 9vw, 9rem);
-  background: $lpb-paper;
-}
-
-.plans__inner {
-  max-width: 1100px;
-  margin-inline: auto;
-  text-align: center;
-}
-
-.plans__title {
-  margin: 0.75rem 0 0;
-  color: $lpb-black;
-}
-
-.plans__lede {
-  font-family: $font-sans;
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
-  color: $lpb-muted;
-  max-width: 60ch;
-  margin: 1rem auto 3rem;
-}
-
-.plans__grid--single {
-  max-width: 480px;
-  margin-inline: auto;
-}
-
-.plans__countdown {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.85rem;
-  margin-bottom: 2.5rem;
-}
-
-// El contador está pensado para fondo oscuro; aquí va sobre papel claro.
-.plans__countdown :deep(.countdown__value) {
-  color: $lpb-black;
-}
-
-.plans__countdown :deep(.countdown__label) {
-  color: $lpb-muted;
-}
-
-.plans__countdown-label {
-  font-family: $font-sans;
-  font-size: 0.9rem;
-  color: $lpb-muted;
-  max-width: 46ch;
-}
-
-.plan-card__compare {
-  font-family: $font-sans;
-  font-size: 0.9rem;
-  color: $lpb-muted;
-  margin: -0.5rem 0 0;
-
-  s {
-    opacity: 0.7;
-  }
-}
-
-.plans__grid {
+.reto__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
   align-items: start;
-}
 
-.plan-card {
-  position: relative;
-  background: $lpb-white;
-  border: 1px solid rgba($lpb-black, 0.06);
-  border-radius: 1.5rem;
-  padding: clamp(1.75rem, 4vw, 2.5rem);
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.plan-card--featured {
-  border-color: rgba($lpb-green, 0.35);
-  box-shadow: 0 24px 70px rgba($lpb-green, 0.1);
-}
-
-.plan-card__badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-family: $font-mono;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $lpb-green-dark;
-  background: rgba($lpb-green, 0.1);
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-
-  &--soon {
-    color: $lpb-muted;
-    background: rgba($lpb-black, 0.06);
+  @include mq-down($bp-lg) {
+    grid-template-columns: 1fr;
   }
 }
 
-.plan-card--disabled {
-  opacity: 0.85;
-  background: rgba($lpb-white, 0.7);
+.reto__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
-.plan-card__name {
+.reto__title {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.reto__lead {
+  margin: 0;
+}
+
+// ── Lo que incluye, numerado ─────────────────────────────────────────────────
+.reto__features {
+  list-style: none;
+  margin: clamp(0.75rem, 2vw, 1.5rem) 0 0;
+  padding: 0;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.3rem 1rem;
+  padding-block: clamp(0.9rem, 1.8vw, 1.2rem);
+  border-bottom: 1px solid var(--s-line);
+
+  &:last-child { border-bottom: 0; }
+}
+
+.feature__num { line-height: 1.9; }
+
+.feature__title {
   font-family: $font-display;
-  font-size: 1.75rem;
-  font-weight: 400;
-  margin: 0;
-  color: $lpb-black;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+  color: var(--s-text);
+  margin: 0 0 0.25rem;
 }
 
-.plan-card__description {
-  font-family: $font-sans;
-  font-size: 0.95rem;
+.feature__text {
+  @include body;
+  margin: 0;
+}
+
+// ── Countdown ────────────────────────────────────────────────────────────────
+.reto__countdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-top: clamp(1rem, 2vw, 1.75rem);
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  border: 1px solid var(--s-line);
+  border-radius: $r-md;
+  background: $lpb-cream;
+}
+
+.reto__countdown-label {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   line-height: 1.5;
-  color: $lpb-muted;
-  margin: 0;
+  color: var(--s-mute);
 }
 
-.plan-card__price {
+// El contador se diseñó para fondo oscuro; aquí va sobre crema.
+.reto__countdown :deep(.countdown__value) { color: $lpb-black; }
+.reto__countdown :deep(.countdown__label) { color: $lpb-muted; }
+
+// ── Tarjeta de precio ────────────────────────────────────────────────────────
+.reto__aside {
+  position: sticky;
+  top: clamp(5.5rem, 9vw, 7rem);
+
+  @include mq-down($bp-lg) {
+    position: static;
+  }
+}
+
+.price-card {
+  @include surface-dark;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: clamp(1.75rem, 3.5vw, 2.5rem);
+  border-radius: $r-lg;
+  border: 1px solid rgba($lpb-light, 0.14);
+  box-shadow: $shadow-lg;
+}
+
+.price-card__badge { align-self: flex-start; }
+
+.price-card__name {
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--s-mute);
+  margin: 0.4rem 0 0;
+}
+
+.price-card__price {
   display: flex;
   align-items: flex-start;
   gap: 0.15rem;
-  margin: 0.5rem 0;
 }
 
-.plan-card__currency {
-  font-family: $font-display;
-  font-size: 1.5rem;
-  color: $lpb-black;
-  margin-top: 0.25rem;
+.price-card__currency {
+  @include display(1.4rem, 1.7rem);
+  color: var(--s-text);
+  margin-top: 0.35rem;
 }
 
-.plan-card__amount {
-  font-family: $font-display;
-  font-size: clamp(3rem, 7vw, 4rem);
-  font-weight: 400;
+.price-card__amount {
+  @include display(3.2rem, 4.6rem);
+  color: var(--s-text);
   line-height: 1;
-  color: $lpb-black;
 }
 
-.plan-card__period {
+.price-card__period {
   font-family: $font-mono;
-  font-size: 0.8rem;
-  color: $lpb-muted;
-  align-self: flex-end;
-  margin-bottom: 0.6rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--s-mute);
+  margin: 0;
 }
 
-.plan-card__features {
-  list-style: none;
-  padding: 0;
+.price-card__compare {
+  @include body;
+  font-size: 0.88rem;
   margin: 0;
+
+  s { opacity: 0.65; }
+}
+
+.price-card__list {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.55rem;
+  margin: 0.9rem 0;
+  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--s-line);
 
   li {
     display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    align-items: flex-start;
+    gap: 0.65rem;
     font-family: $font-sans;
-    font-size: 0.95rem;
-    color: $lpb-graphite;
-
-    i {
-      color: $lpb-green;
-      font-size: 0.8rem;
-    }
+    font-size: 0.93rem;
+    line-height: 1.5;
+    color: var(--s-soft);
   }
 }
 
-.plan-card__button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+.price-card__check {
+  color: var(--s-accent);
+  font-size: 0.7rem;
+  line-height: 1.75;
+  flex: none;
+}
+
+.price-card__cta {
+  @include btn-primary;
   width: 100%;
-  padding: 1rem 1.5rem;
-  border-radius: 999px;
-  font-family: $font-mono;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   text-decoration: none;
-  cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
-  border: 1px solid transparent;
-
-  &--primary {
-    background: $lpb-black;
-    color: $lpb-white;
-
-    &:hover:not(:disabled) {
-      background: $lpb-green-dark;
-      transform: translateY(-2px);
-    }
-  }
-
-  &--outline {
-    background: transparent;
-    color: $lpb-black;
-    border-color: rgba($lpb-black, 0.15);
-
-    &:hover {
-      background: $lpb-black;
-      color: $lpb-white;
-    }
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
 }
 
-.plan-card__link {
-  font-family: $font-sans;
-  font-size: 0.85rem;
-  color: $lpb-green-deep;
-  text-decoration: none;
-  text-align: center;
-  display: block;
-  margin-top: -0.25rem;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.plan-card__error {
+.price-card__error {
   font-family: $font-sans;
   font-size: 0.85rem;
   color: $alert-error;
   margin: 0;
   text-align: center;
+}
+
+.price-card__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  text-align: center;
+}
+
+.price-card__link {
+  font-family: $font-sans;
+  font-size: 0.83rem;
+  color: var(--s-mute);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--s-accent);
+    text-decoration: underline;
+  }
 }
 </style>
