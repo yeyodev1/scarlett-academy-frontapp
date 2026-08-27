@@ -4,7 +4,8 @@
  *   localhost:5173 / 5174          -> http://localhost:8101/api
  *   dev-project-front.bakano.ec    -> https://dev-project-back.bakano.ec/api
  *   *.trycloudflare.com            -> https://dev-project-back.bakano.ec/api
- *   metodosk.ec / www.metodosk.ec  -> https://api.metodosk.ec/api
+ *   scarlettcordova.com (+ www)    -> https://api.metodosk.ec/api
+ *   metodosk.ec / www.metodosk.ec  -> https://api.metodosk.ec/api  (dominio legado)
  *
  * VITE_API_BASE_URL sobreescribe todo (útil para previews de Vercel).
  */
@@ -12,6 +13,17 @@
 const LOCAL_API = 'http://localhost:8101/api'
 const DEV_API = 'https://dev-project-back.bakano.ec/api'
 const PROD_API = 'https://api.metodosk.ec/api'
+
+/**
+ * Dominios de producción. scarlettcordova.com es el dominio principal;
+ * metodosk.ec se mantiene porque sigue resolviendo al mismo frontend.
+ */
+const PROD_HOSTS = new Set([
+  'scarlettcordova.com',
+  'www.scarlettcordova.com',
+  'metodosk.ec',
+  'www.metodosk.ec',
+])
 
 /** Normaliza a una URL que siempre termine en /api sin barra final. */
 function normalize(raw: string): string {
@@ -30,7 +42,7 @@ export function resolveApiBaseUrl(): string {
   if (hostname === 'localhost' || hostname === '127.0.0.1') return LOCAL_API
   if (hostname === 'dev-project-front.bakano.ec') return DEV_API
   if (hostname.endsWith('.trycloudflare.com')) return DEV_API
-  if (hostname === 'metodosk.ec' || hostname === 'www.metodosk.ec') return PROD_API
+  if (PROD_HOSTS.has(hostname)) return PROD_API
 
   // Previews de Vercel: usan el backend de producción, pero ese backend
   // detecta el origin *.vercel.app y responde con credenciales de prueba.
