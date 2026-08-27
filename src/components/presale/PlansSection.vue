@@ -165,8 +165,8 @@ function trackCheckoutIntent() {
               <a :href="whatsappUrl" target="_blank" rel="noopener" class="price-card__link">
                 Tengo una pregunta antes de pagar
               </a>
-              <RouterLink :to="{ name: 'home', hash: '#video' }" class="price-card__link">
-                Saber más sobre el reto
+              <RouterLink :to="{ name: 'home', hash: '#productos' }" class="price-card__link">
+                Comparar con el ebook
               </RouterLink>
             </div>
           </div>
