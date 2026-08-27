@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import PresaleHero from '@/components/presale/PresaleHero.vue'
+import BrandHero from '@/components/home/BrandHero.vue'
+import ProductsSection from '@/components/home/ProductsSection.vue'
+import EbookSection from '@/components/home/EbookSection.vue'
 import PlansSection from '@/components/presale/PlansSection.vue'
-import BenefitsSection from '@/components/presale/BenefitsSection.vue'
-import TestimonialsSection from '@/components/home/TestimonialsSection.vue'
+import AuthoritySection from '@/components/home/AuthoritySection.vue'
 import VideoSection from '@/components/home/VideoSection.vue'
+import TestimonialsSection from '@/components/home/TestimonialsSection.vue'
 import FaqSection from '@/components/home/FaqSection.vue'
 import FinalCtaSection from '@/components/home/FinalCtaSection.vue'
+import StickyCta from '@/components/home/StickyCta.vue'
 import MarqueeText from '@/components/ui/MarqueeText.vue'
 
 onMounted(() => {
   if (typeof fbq !== 'undefined') {
     fbq('track', 'ViewContent', {
-      content_name: 'Academia Método SK',
-      content_type: 'product',
+      content_name: 'Scarlett Cordova — Home',
+      content_type: 'product_group',
     })
   }
 })
@@ -26,19 +29,40 @@ const marqueeItems = [
   'Ciencia + amor propio',
   'Por Scarlett Cordova',
 ]
+
+const marqueeClosing = [
+  'Tu proceso es tuyo',
+  'Sin castigo',
+  'Sin extremos',
+  'Resultados sostenibles',
+]
 </script>
 
 <template>
   <div class="home">
-    <PresaleHero />
+    <!-- Marca paraguas: quién es y qué ofrece -->
+    <BrandHero />
     <MarqueeText :items="marqueeItems" theme="green" :speed="42" />
+
+    <!-- Los dos servicios, uno al lado del otro -->
+    <ProductsSection />
+
+    <!-- Servicio 1: el ebook (cobra en su propio funnel) -->
+    <EbookSection />
+
+    <!-- Servicio 2: el reto (se compra aquí dentro) -->
     <PlansSection />
-    <BenefitsSection />
-    <MarqueeText :items="['Tu proceso es tuyo', 'Sin castigo', 'Sin extremos', 'Resultados sostenibles']" theme="dark" :speed="48" />
+
+    <MarqueeText :items="marqueeClosing" theme="dark" :speed="48" />
+
+    <!-- Prueba y confianza, comunes a los dos productos -->
+    <AuthoritySection />
     <VideoSection />
     <TestimonialsSection />
     <FaqSection />
     <FinalCtaSection />
+
+    <StickyCta />
   </div>
 </template>
 
@@ -46,5 +70,7 @@ const marqueeItems = [
 .home {
   display: block;
   background: var(--bg);
+  // Deja aire al final para que la barra fija no tape el footer.
+  padding-bottom: 0;
 }
 </style>
