@@ -100,7 +100,11 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
   );
 
   @include mq-down($bp-lg) {
-    background: linear-gradient(180deg, rgba($lpb-black, 0.55) 0%, rgba($lpb-black, 0.75) 100%);
+    // Con la foto de fondo completo el velo se refuerza en los bordes y se
+    // aclara en el centro: la tarjeta se apoya sin tapar del todo el retrato.
+    background:
+      radial-gradient(120% 75% at 50% 45%, rgba($lpb-black, 0.35) 0%, rgba($lpb-black, 0.82) 100%),
+      linear-gradient(180deg, rgba($lpb-black, 0.5) 0%, rgba($lpb-black, 0.2) 35%, rgba($lpb-black, 0.85) 100%);
   }
 }
 
@@ -141,14 +145,25 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
 
   // Sobre la foto necesita superficie propia para que el formulario se lea.
   @include mq-down($bp-lg) {
-    background: rgba($lpb-paper, 0.96);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba($lpb-black, 0.08);
+    max-width: 400px;
+    background: rgba($lpb-paper, 0.94);
+    backdrop-filter: blur(20px) saturate(1.1);
+    -webkit-backdrop-filter: blur(20px) saturate(1.1);
+    border: 1px solid rgba($lpb-light, 0.22);
     border-radius: $r-lg;
-    padding: clamp(1.5rem, 6vw, 2.25rem);
-    box-shadow: $shadow-lg;
+    padding: clamp(1.6rem, 6vw, 2.4rem);
+    box-shadow: 0 40px 90px rgba($lpb-black, 0.5);
+    animation: auth-card-in 0.7s $ease-out both;
   }
+}
+
+@keyframes auth-card-in {
+  from { opacity: 0; transform: translateY(18px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth__card { animation: none; }
 }
 
 .auth__brand {
