@@ -5,6 +5,7 @@ import { gsap } from 'gsap'
 import BrandWordmark from '@/components/ui/BrandWordmark.vue'
 import { useUserStore } from '@/stores/user'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/config/site'
+import { useCloudinary } from '@/composables/useCloudinary'
 
 const scrolled = ref(false)
 const open = ref(false)
@@ -12,6 +13,20 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
 const menuContainer = ref<HTMLElement | null>(null)
+
+// Foto de fondo del panel desplegable (solo móvil; en escritorio el menú es
+// inline y estas capas quedan ocultas).
+const { scarlett } = useCloudinary()
+const menuPhoto = scarlett('editorial', { w: 900, h: 1600, crop: 'fill', gravity: 'face' })
+const menuPhotoSm = scarlett('editorial', { w: 560, h: 995, crop: 'fill', gravity: 'face' })
+
+/**
+ * La foto solo se monta la primera vez que se abre el menú. Con `loading="lazy"`
+ * dentro del panel (recortado con `clip-path: circle(0%)`) el navegador nunca la
+ * consideraba visible y no llegaba a descargarla; y cargarla siempre sería un
+ * peso inútil para quien nunca abre el menú.
+ */
+const menuOpened = ref(false)
 
 const onScroll = () => {
   scrolled.value = window.scrollY > 20
@@ -25,6 +40,7 @@ onMounted(() => {
 onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
 const toggle = () => {
+  if (!open.value) menuOpened.value = true
   open.value = !open.value
   document.body.style.overflow = open.value ? 'hidden' : ''
 }
@@ -85,6 +101,21 @@ const logout = () => {
         :class="{ 'nav__content--open': open }"
         ref="menuContainer"
       >
+        <template v-if="menuOpened">
+          <img
+            class="nav__menu-photo"
+            :src="menuPhoto"
+            :srcset="`${menuPhotoSm} 560w, ${menuPhoto} 900w`"
+            sizes="100vw"
+            alt=""
+            aria-hidden="true"
+            decoding="async"
+            width="900"
+            height="1600"
+          />
+          <div class="nav__menu-veil" aria-hidden="true" />
+        </template>
+
         <div class="nav__content-inner">
           <nav class="nav__links">
             <template v-if="!userStore.isAuthenticated">
@@ -180,6 +211,13 @@ const logout = () => {
     }
   }
 
+  // Con el panel abierto el fondo es la foto oscura: marca y burger en claro.
+  &--open {
+    color: $lpb-light;
+    background: none !important;
+    border-bottom-color: transparent !important;
+  }
+
   &--scrolled,
   &--legal {
     background: rgba($lpb-paper, 0.92);
@@ -264,6 +302,9 @@ const logout = () => {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  // Base opaca: sin ella se transparentaba la página de debajo, porque el velo
+  // sobre la foto no llega a cubrir del todo.
+  background: $lpb-black;
   clip-path: circle(0% at 100% 2.4rem);
   transition: clip-path 0.65s cubic-bezier(0.55, 0, 0.2, 1);
 
@@ -272,12 +313,36 @@ const logout = () => {
   }
 }
 
+// Fondo del panel: retrato de Scarlett con velo, igual que el hero.
+.nav__menu-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  z-index: 0;
+}
+
+.nav__menu-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  // Calibrado para que el retrato se vea: oscurece la columna izquierda, donde
+  // caen los enlaces, y deja el lado derecho —el rostro— casi limpio.
+  background:
+    linear-gradient(180deg, rgba($lpb-black, 0.55) 0%, rgba($lpb-black, 0.22) 40%, rgba($lpb-black, 0.8) 100%),
+    linear-gradient(90deg, rgba($lpb-black, 0.5) 0%, rgba($lpb-black, 0.12) 45%, rgba($lpb-black, 0) 72%);
+}
+
 .nav__content-inner {
+  position: relative;
+  z-index: 2;
   flex: 1;
   display: flex;
   flex-direction: column;
   padding: 6rem 2rem 2.5rem;
-  background: $lpb-paper;
+  background: none;
 }
 
 .nav__links {
@@ -296,7 +361,7 @@ const logout = () => {
   font-family: $font-sans;
   font-size: 1.2rem;
   font-weight: 500;
-  color: $lpb-graphite;
+  color: rgba($lpb-light, 0.92);
   text-decoration: none;
   padding: 1rem 1.25rem;
   border: none;
@@ -307,8 +372,8 @@ const logout = () => {
   cursor: pointer;
 
   &:hover {
-    background: rgba($lpb-green, 0.08);
-    color: $lpb-green-deep;
+    background: rgba($lpb-light, 0.08);
+    color: $lpb-light;
     transform: scale(1.02);
   }
 
@@ -317,10 +382,10 @@ const logout = () => {
     font-size: 0.6rem;
     font-weight: 700;
     letter-spacing: 0.12em;
-    // Coral puro sobre crema no llegaba a contraste legible: se usa el tono
-    // profundo de la marca sobre un fondo algo más presente.
-    color: $lpb-green-deep;
-    background: rgba($lpb-green, 0.16);
+    // Sobre el panel oscuro el coral sí contrasta; en escritorio, sobre crema,
+    // el bloque de @media lo cambia al tono profundo.
+    color: $lpb-gold;
+    background: rgba($lpb-light, 0.1);
     padding: 0.2rem 0.45rem;
     border-radius: 0.35rem;
     line-height: 1;
@@ -339,7 +404,7 @@ const logout = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: $lpb-graphite;
+  background: $lpb-green;
   color: $lpb-white;
   padding: 1rem 1.5rem;
   border-radius: 999px;
@@ -354,7 +419,7 @@ const logout = () => {
   border: none;
 
   &:hover {
-    background: $lpb-green-deep;
+    background: $lpb-green-dark;
     transform: scale(1.02);
   }
 
@@ -374,13 +439,13 @@ const logout = () => {
   text-align: left;
   font-family: $font-sans;
   font-size: 0.8rem;
-  color: $lpb-muted;
+  color: rgba($lpb-light, 0.6);
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 
   a {
-    color: $lpb-black;
+    color: rgba($lpb-light, 0.9);
     text-decoration: none;
     font-weight: 500;
     display: inline-flex;
@@ -395,7 +460,7 @@ const logout = () => {
     }
 
     &:hover {
-      color: $lpb-green-deep;
+      color: $lpb-gold;
     }
   }
 }
@@ -406,7 +471,7 @@ const logout = () => {
   font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba($lpb-black, 0.25);
+  color: rgba($lpb-light, 0.35);
 }
 
 @media (min-width: 880px) {
@@ -419,12 +484,15 @@ const logout = () => {
   }
 
   .nav__burger,
-  .nav__mobile-footer {
+  .nav__mobile-footer,
+  .nav__menu-photo,
+  .nav__menu-veil {
     display: none !important;
   }
 
   .nav__content {
     position: static;
+    background: none;
     clip-path: none !important;
     height: auto;
     width: auto;
