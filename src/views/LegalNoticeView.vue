@@ -37,7 +37,7 @@ onMounted(() => {
         <p>
           Este es el sitio digital de la marca personal de Scarlett Cordova,
           dirigido a presentar su trabajo como coach de transformación corporal y a invitar a mujeres
-          a unirse a su comunidad anual cerrada, cuyo registro de preventa se realiza en
+          a sus programas de nutrición y entrenamiento (el ebook y el Reto Método SK), cuya contratación se realiza en
           sus productos y servicios digitales.
         </p>
       </section>
