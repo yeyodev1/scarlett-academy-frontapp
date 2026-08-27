@@ -1,6 +1,15 @@
 @use './colorVariables.module.scss' as *;
 @use './fonts.module.scss' as *;
+@use './designSystem' as ds;
 @use './typography.scss' as *;
+
+// Reset — vive aquí (importado una sola vez) y no en index.scss, que se
+// inyecta en cada componente y lo duplicaría.
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
   --bg:          #{$lpb-paper};
@@ -88,15 +97,35 @@ html.lenis body {
 
 // Container utility — mobile-first paddings
 .container {
-  width: 100%;
-  max-width: 1440px;
-  margin-inline: auto;
-  padding-inline: clamp(2.5rem, 9vw, 9rem);
+  @include ds.container;
 }
 
 .container--narrow {
   max-width: 920px;
 }
+
+// ── Primitivas de sección compartidas por todo el sitio ──────────────────────
+// Permiten alternar claro/oscuro sección a sección sin reescribir estilos.
+.sec {
+  @include ds.section;
+}
+
+.sec--tight   { padding-block: ds.$sec-pad-y-tight; }
+.sec--light   { @include ds.surface-light; }
+.sec--cream   { @include ds.surface-cream; }
+.sec--dark    { @include ds.surface-dark; }
+
+.sec__eyebrow { @include ds.eyebrow; }
+.sec__title   { @include ds.display; }
+.sec__title--impact { @include ds.display-impact; }
+.sec__lead    { @include ds.body-lg; max-width: 60ch; }
+
+.accent { @include ds.accent-word; }
+.num    { @include ds.num; }
+
+.btn-primary { @include ds.btn-primary; }
+.btn-ghost   { @include ds.btn-ghost; }
+.badge-lime  { @include ds.badge-lime; }
 
 // Mobile-first body sizing — base 16px, escalas suaves
 @media (max-width: 480px) {
