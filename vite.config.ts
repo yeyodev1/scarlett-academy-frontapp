@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 5173,
-    strictPort: true,
+    // Sin strictPort: si 5173 esta ocupado, Vite prueba 5174, 5175, etc.
+    strictPort: false,
     // Hosts servidos a través del túnel cloudflared.
     allowedHosts: [
       'dev-project-front.bakano.ec',
