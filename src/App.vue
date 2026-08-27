@@ -18,12 +18,30 @@ const route = useRoute()
 // )
 
 const isDashboard = computed(() => route.path.startsWith('/app') || route.path.startsWith('/admin'))
+
+/**
+ * Las pantallas de autenticación son de pantalla completa: traen su propia
+ * marca, su foto de fondo y su enlace de vuelta. Con el nav y el footer
+ * alrededor, la tarjeta quedaba descentrada y la página scrolleaba sin motivo.
+ */
+const AUTH_ROUTES = new Set([
+  'login',
+  'register',
+  'verify-email',
+  'forgot-password',
+  'reset-password',
+  'payment-result',
+  'pay-response',
+])
+const isStandalone = computed(
+  () => isDashboard.value || AUTH_ROUTES.has(String(route.name ?? '')),
+)
 </script>
 
 <template>
   <div class="app">
     <!-- <AppPreloader v-if="showPreloader" @done="preloaded = true" /> -->
-    <TheNav v-if="!isDashboard" />
+    <TheNav v-if="!isStandalone" />
     <main class="app__main" :class="{ 'app__main--dashboard': isDashboard }">
       <RouterView v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -31,7 +49,7 @@ const isDashboard = computed(() => route.path.startsWith('/app') || route.path.s
         </transition>
       </RouterView>
     </main>
-    <TheFooter v-if="!isDashboard" />
+    <TheFooter v-if="!isStandalone" />
   </div>
 </template>
 
