@@ -1,5 +1,8 @@
+// Este archivo se inyecta en CADA componente (vite additionalData).
+// Solo variables, funciones y mixins — nada que emita CSS.
 @forward 'colorVariables.module.scss';
 @forward 'fonts.module.scss';
+@forward 'designSystem';
 
 @use "sass:color";
 @use "sass:math";
@@ -25,10 +28,4 @@
     @return color.scale($c, $lightness: -$pct);
   }
   @return color.adjust($c, $lightness: -$pct);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
