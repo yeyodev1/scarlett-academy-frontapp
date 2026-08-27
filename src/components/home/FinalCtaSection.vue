@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from '@/composables/useScrollReveal'
-import { buildCheckoutUrl } from '@/config/site'
+import { buildRetoUrl, buildEbookUrl, EBOOK_PRICE } from '@/config/site'
 import AppButton from '@/components/ui/AppButton.vue'
 
 const root = ref<HTMLElement | null>(null)
@@ -36,28 +36,42 @@ onBeforeUnmount(() => ctx?.revert())
 <template>
   <section class="final-cta" ref="root">
     <div class="final-cta__inner">
-      <span class="eyebrow eyebrow--green" data-fade>Por invitación</span>
+      <span class="eyebrow eyebrow--green" data-fade>Empieza hoy</span>
       <h2 class="final-cta__title display-xl">
-        <span class="final-cta__line"><span>¿Estás lista</span></span>
-        <span class="final-cta__line"><span>para</span></span>
-        <span class="final-cta__line"><span class="final-cta__italic">un año contigo?</span></span>
+        <span class="final-cta__line"><span>Tu cuerpo no</span></span>
+        <span class="final-cta__line"><span>necesita más</span></span>
+        <span class="final-cta__line"><span class="final-cta__italic">fuerza de voluntad.</span></span>
       </h2>
 
       <p class="final-cta__lede" data-fade>
-        No es para todas. Si calificas, recibes el aviso primero,
-        un código de descuento exclusivo y tu cupo en la lista VIP.
+        Necesita un método. Elige por dónde empezar: el ebook para entenderlo hoy,
+        o el reto para que te acompañemos los próximos tres meses.
       </p>
 
       <div class="final-cta__cta" data-fade>
-        <AppButton :href="buildCheckoutUrl('final-cta')" variant="primary" size="lg">
-          Únete a la comunidad
+        <AppButton
+          :href="buildRetoUrl('final-cta')"
+          variant="primary"
+          size="lg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Quiero mi cupo en el reto ↗
         </AppButton>
+        <a
+          class="final-cta__alt"
+          :href="buildEbookUrl('final-cta')"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          o llévate el ebook por ${{ EBOOK_PRICE }} ↗
+        </a>
       </div>
 
       <ul class="final-cta__details" data-fade>
-        <li><span>·</span> Mujeres ocupadas y dueñas de negocio</li>
-        <li><span>·</span> Compromiso anual real</li>
-        <li><span>·</span> Capital tres cifras</li>
+        <li><span>·</span> Entrenamiento y nutrición con ciencia</li>
+        <li><span>·</span> Casa o gimnasio, tú eliges</li>
+        <li><span>·</span> Online desde Ecuador, LATAM, USA y Europa</li>
       </ul>
     </div>
 
@@ -126,6 +140,22 @@ onBeforeUnmount(() => ctx?.revert())
 
 .final-cta__cta {
   margin-top: 0.5rem;
+}
+
+.final-cta__alt {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: $font-sans;
+  font-size: 0.92rem;
+  color: rgba($lpb-white, 0.72);
+  text-decoration: none;
+  border-bottom: 1px solid rgba($lpb-white, 0.28);
+  padding-bottom: 0.15rem;
+
+  &:hover {
+    color: $lpb-gold;
+    border-bottom-color: $lpb-gold;
+  }
 }
 
 .final-cta__details {
