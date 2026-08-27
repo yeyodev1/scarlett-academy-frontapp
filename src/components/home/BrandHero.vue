@@ -9,17 +9,20 @@ const root = ref<HTMLElement | null>(null)
 
 useScrollReveal(root, { y: 34, stagger: 0.09, start: 'top 95%' })
 
-const opts = { crop: 'fill', gravity: 'face' } as const
+// Escritorio: la foto va a todo el ancho. Como en esta sesión la modelo está
+// centrada en el encuadre, a pantalla completa quedaba justo detrás del
+// titular. Se pide un lienzo apaisado con la foto anclada al este (`g_east`) y
+// el resto rellenado con su color dominante: el gris del estudio continúa hacia
+// la izquierda sin costura, y el texto cae sobre esa zona vacía.
+const wide = { crop: 'pad', gravity: 'east', background: 'auto:predominant' } as const
+const heroImage = scarlett('heroine', { w: 2400, h: 1350, ...wide })
+const heroImageMd = scarlett('heroine', { w: 1600, h: 900, ...wide })
+const heroImageLg = scarlett('heroine', { w: 3000, h: 1688, ...wide })
 
-// Escritorio: recorte apaisado, el retrato ocupa la mitad derecha.
-const heroImage = scarlett(11, { w: 1600, h: 2200, ...opts })
-const heroImageMd = scarlett(11, { w: 1100, h: 1500, ...opts })
-const heroImageLg = scarlett(11, { w: 2000, h: 2600, ...opts })
-
-// Móvil: el contenedor es mucho más estrecho y `cover` recortaba a la altura
-// del torso. Se pide a Cloudinary un 9:16 centrado en el rostro.
-const heroMobile = scarlett(11, { w: 780, h: 1387, ...opts })
-const heroMobileSm = scarlett(11, { w: 520, h: 924, ...opts })
+// Móvil: vertical y centrado en el rostro; ahí no hay columna de texto al lado.
+const portraitOpts = { crop: 'fill', gravity: 'face' } as const
+const heroMobile = scarlett('heroine', { w: 780, h: 1387, ...portraitOpts })
+const heroMobileSm = scarlett('heroine', { w: 520, h: 924, ...portraitOpts })
 
 /** Los tres datos que resumen la oferta antes de que bajen a leer. */
 const stats = [
@@ -41,14 +44,14 @@ const stats = [
         <img
           class="hero__image"
           :src="heroImage"
-          :srcset="`${heroImageMd} 1100w, ${heroImage} 1600w, ${heroImageLg} 2000w`"
+          :srcset="`${heroImageMd} 1600w, ${heroImage} 2400w, ${heroImageLg} 3000w`"
           sizes="100vw"
           alt="Scarlett Cordova"
           loading="eager"
           fetchpriority="high"
           decoding="async"
-          width="1600"
-          height="2200"
+          width="2400"
+          height="1350"
         />
       </picture>
       <div class="hero__veil" aria-hidden="true" />
@@ -111,17 +114,19 @@ const stats = [
   overflow: clip;
 }
 
+// La foto cubre el hero completo. El encuadre útil se consigue en Cloudinary
+// (lienzo apaisado + relleno a la izquierda), no recortando aquí.
 .hero__image {
   position: absolute;
-  inset: -8% 0;
+  inset: 0;
   width: 100%;
-  height: 116%;
+  height: 100%;
   object-fit: cover;
-  object-position: 70% 22%;
+  object-position: center 20%;
   background-color: $lpb-black;
 
   @include mq-down($bp-md) {
-    // La fuente 9:16 ya viene encuadrada al rostro: basta anclar arriba.
+    // En móvil la fuente ya viene vertical y encuadrada al rostro.
     object-position: center top;
   }
 }
@@ -131,38 +136,27 @@ const stats = [
   display: contents;
 }
 
-// Velo en dos capas. La horizontal oscurece SOLO la columna del texto; la
-// vertical se corta antes de la mitad derecha (mask) para no sumarse sobre la
-// foto y dejarla negra.
+// Oscurece la mitad izquierda —la zona rellenada, sin figura— para que el
+// titular se lea, y deja limpio el lado derecho donde está el retrato.
 .hero__veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    95deg,
-    rgba($lpb-black, 0.92) 0%,
-    rgba($lpb-black, 0.82) 30%,
-    rgba($lpb-black, 0.35) 58%,
-    rgba($lpb-black, 0) 80%
-  );
-
-  // Pie oscuro para empalmar con el marquee, sin ensuciar el retrato.
-  &::after {
-    content: '';
-    position: absolute;
-    inset: auto 0 0;
-    height: 45%;
-    background: linear-gradient(180deg, rgba($lpb-black, 0) 0%, rgba($lpb-black, 0.85) 100%);
-  }
+  background:
+    linear-gradient(95deg,
+      rgba($lpb-black, 0.95) 0%,
+      rgba($lpb-black, 0.86) 32%,
+      rgba($lpb-black, 0.45) 54%,
+      rgba($lpb-black, 0.05) 74%,
+      rgba($lpb-black, 0) 88%),
+    linear-gradient(180deg, rgba($lpb-black, 0) 52%, rgba($lpb-black, 0.9) 100%);
 
   @include mq-down($bp-md) {
     background: linear-gradient(
       180deg,
-      rgba($lpb-black, 0.72) 0%,
-      rgba($lpb-black, 0.3) 34%,
-      rgba($lpb-black, 0.88) 82%
+      rgba($lpb-black, 0.66) 0%,
+      rgba($lpb-black, 0.2) 32%,
+      rgba($lpb-black, 0.9) 82%
     );
-
-    &::after { display: none; }
   }
 }
 
