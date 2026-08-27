@@ -4,28 +4,36 @@ import { gsap } from '@/composables/useScrollReveal'
 
 const faq = [
   {
-    q: '¿Cuánto cuesta la comunidad anual?',
-    a: 'El precio se anuncia el día que abre la preventa. Por ahora confirmamos que es capital tres cifras (USD) y cubre la comunidad un año entero. Las registradas en la lista VIP reciben un descuento exclusivo que el público general no ve.',
+    q: '¿Cuál elijo: el ebook o el reto?',
+    a: 'El ebook si quieres entender el porqué y avanzar por tu cuenta: macros, recetas, suplementación y rutinas, por $33 de pago único. El Reto Método SK si prefieres que te lleven de la mano tres meses con plan, seguimiento, clases en vivo y comunidad. Muchas empiezan por el ebook y luego entran al reto.',
   },
   {
-    q: '¿Cuándo abre la preventa?',
-    a: 'No tenemos fecha pública aún. Las registradas en la lista VIP reciben aviso 24 horas antes de que abra. Si no estás en la lista, te enteras al mismo tiempo que el resto.',
+    q: '¿Puedo comprar los dos?',
+    a: 'Sí, y se complementan. El ebook te da la base teórica; el reto te da la ejecución acompañada. No hay contenido duplicado que te haga sentir que pagaste dos veces por lo mismo.',
   },
   {
-    q: '¿Por qué un año entero y no un programa corto?',
-    a: 'Porque transformar un cuerpo y un estilo de vida toma tiempo. Programas cortos dan resultados que se evaporan. Esta comunidad está hecha para lograr cambios que se sostengan en tu vida real.',
+    q: '¿El reto es en casa o en gimnasio?',
+    a: 'Tú eliges. El plan viene en las dos versiones y puedes cambiar de una a otra durante los tres meses si tu rutina cambia.',
   },
   {
-    q: '¿Para quién es y para quién no es?',
-    a: 'Es para mujeres ocupadas y dueñas de negocio dispuestas a comprometerse un año entero. No es para quienes buscan dietas restrictivas, atajos o resultados en 8 semanas. La estructura asume que tu vida sigue mientras transformas tu cuerpo.',
+    q: '¿Necesito experiencia previa entrenando?',
+    a: 'No. Las rutinas explican cada ejercicio y la progresión de cargas arranca desde donde estés hoy. Si ya entrenas, el plan también escala.',
+  },
+  {
+    q: '¿Voy a tener que hacer dieta restrictiva?',
+    a: 'No. La nutrición del reto la arma Karen López, nutricionista, con un enfoque flexible: sin alimentos prohibidos y adaptable a lo que comes en tu casa. El ebook sigue la misma lógica.',
   },
   {
     q: '¿Tengo que vivir en Ecuador?',
-    a: 'No. La comunidad funciona online. Mujeres en Ecuador, Latinoamérica, USA y Europa pueden participar.',
+    a: 'No. Todo funciona online. Participan mujeres desde Ecuador, Latinoamérica, USA y Europa.',
   },
   {
-    q: '¿Y si me registro pero no califico?',
-    a: 'No pasa nada. Solo significa que esta cohorte no es para ti hoy. Podrás aplicar a una próxima edición cuando estés lista.',
+    q: '¿Cuánto dura mi acceso al reto?',
+    a: 'Tres meses completos desde que entras, con acceso a la plataforma, las clases en vivo y la comunidad durante todo ese periodo.',
+  },
+  {
+    q: '¿Cómo pago y es seguro?',
+    a: 'El reto se paga con tarjeta dentro del sitio mediante Payphone, la pasarela de pagos. El ebook se compra en su propia página de pago. En los dos casos recibes acceso apenas se confirma el cobro.',
   },
 ]
 
