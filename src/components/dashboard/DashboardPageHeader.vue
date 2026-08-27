@@ -94,9 +94,7 @@ const todayLabel = computed(() => {
 }
 
 .page-header__title {
-  font-family: $font-display;
-  font-size: 1.75rem;
-  font-weight: 400;
+  @include display(1.5rem, 2.1rem);
   color: $lpb-black;
   margin: 0;
 }
@@ -105,7 +103,7 @@ const todayLabel = computed(() => {
   font-family: $font-mono;
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: $lpb-muted;
 }
