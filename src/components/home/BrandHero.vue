@@ -12,9 +12,10 @@ useScrollReveal(root, { y: 34, stagger: 0.09, start: 'top 95%' })
 // Escritorio: la foto va a todo el ancho. Como en esta sesión la modelo está
 // centrada en el encuadre, a pantalla completa quedaba justo detrás del
 // titular. Se pide un lienzo apaisado con la foto anclada al este (`g_east`) y
-// el resto rellenado con su color dominante: el gris del estudio continúa hacia
-// la izquierda sin costura, y el texto cae sobre esa zona vacía.
-const wide = { crop: 'pad', gravity: 'east', background: 'auto:predominant' } as const
+// el resto extendido por Cloudinary con `b_gen_fill`, que continúa el degradado
+// del fondo de estudio. Se probó antes `b_auto:predominant`, pero rellena con
+// un color plano y dejaba una costura vertical visible.
+const wide = { crop: 'pad', gravity: 'east', background: 'gen_fill' } as const
 const heroImage = scarlett('heroine', { w: 2400, h: 1350, ...wide })
 const heroImageMd = scarlett('heroine', { w: 1600, h: 900, ...wide })
 const heroImageLg = scarlett('heroine', { w: 3000, h: 1688, ...wide })
