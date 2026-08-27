@@ -87,11 +87,13 @@ export interface Subscription {
   amount: number | null
 }
 
+// Sesión vigente (`metodosk/`), la misma de metodosk.ec. La anterior
+// (`scarlett/quema-grasa-*`) mostraba a Scarlett pelirroja y quedó obsoleta.
 const cloudinaryPhoto = (publicId: string, size: 'course' | 'recipe' = 'course') => {
   const transform = size === 'course'
     ? 'w_800,h_450,c_fill,g_auto,q_auto,f_auto'
     : 'w_800,h_600,c_fill,g_auto,q_auto,f_auto'
-  return `https://res.cloudinary.com/kyt3rjjz/image/upload/${transform}/scarlett/quema-grasa-construye-musculo/${publicId}`
+  return `https://res.cloudinary.com/kyt3rjjz/image/upload/${transform}/metodosk/${publicId}`
 }
 
 function generateLessons(courseId: string, count: number): Lesson[] {
@@ -173,7 +175,7 @@ const coursesData: Course[] = [
     id: 'course-1',
     title: 'Transformación Total',
     subtitle: 'El método completo para mujeres que quieren resultados sin sacrificar su vida.',
-    thumbnail: cloudinaryPhoto('img-2069-jpg.jpg'),
+    thumbnail: cloudinaryPhoto('sk-08'),
     progress: 22,
     totalLessons: 10,
     completedLessons: 2,
@@ -185,7 +187,7 @@ const coursesData: Course[] = [
     id: 'course-2',
     title: 'Nutrición Real',
     subtitle: 'Aprende a comer sin dietas, sin culpa y con resultados duraderos.',
-    thumbnail: cloudinaryPhoto('img-2100-jpg.jpg'),
+    thumbnail: cloudinaryPhoto('sk-09'),
     progress: 0,
     totalLessons: 10,
     completedLessons: 0,
@@ -197,7 +199,7 @@ const coursesData: Course[] = [
     id: 'course-3',
     title: 'Entrena en Casa',
     subtitle: 'Rutinas efectivas que puedes hacer sin equipo y en poco tiempo.',
-    thumbnail: cloudinaryPhoto('img-2501-jpg.jpg'),
+    thumbnail: cloudinaryPhoto('sk-13'),
     progress: 0,
     totalLessons: 10,
     completedLessons: 0,
@@ -209,7 +211,7 @@ const coursesData: Course[] = [
     id: 'course-4',
     title: 'Mujer de Alto Rendimiento',
     subtitle: 'Gestiona tu energía, tiempo y bienestar como la dueña de tu vida.',
-    thumbnail: cloudinaryPhoto('img-2502-jpg.jpg'),
+    thumbnail: cloudinaryPhoto('sk-15'),
     progress: 0,
     totalLessons: 10,
     completedLessons: 0,
@@ -221,7 +223,7 @@ const coursesData: Course[] = [
     id: 'course-5',
     title: 'Comunidad Anual',
     subtitle: 'Acompañamiento, mentorías y el poder de un grupo que crece junto.',
-    thumbnail: cloudinaryPhoto('img-9664-jpg.jpg'),
+    thumbnail: cloudinaryPhoto('sk-14'),
     progress: 0,
     totalLessons: 10,
     completedLessons: 0,
@@ -357,7 +359,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-1',
     title: 'Tazón de avena proteica',
     category: 'desayuno',
-    image: cloudinaryPhoto('img-2098-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-01', 'recipe'),
     calories: 380,
     protein: 28,
     carbs: 42,
@@ -384,7 +386,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-2',
     title: 'Pechuga de pollo con vegetales',
     category: 'almuerzo',
-    image: cloudinaryPhoto('img-2105-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-04', 'recipe'),
     calories: 520,
     protein: 45,
     carbs: 35,
@@ -411,7 +413,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-3',
     title: 'Ensalada de atún y garbanzos',
     category: 'almuerzo',
-    image: cloudinaryPhoto('img-2463-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-07', 'recipe'),
     calories: 460,
     protein: 32,
     carbs: 38,
@@ -438,7 +440,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-4',
     title: 'Wrap de huevo y aguacate',
     category: 'desayuno',
-    image: cloudinaryPhoto('img-2501-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-13', 'recipe'),
     calories: 420,
     protein: 22,
     carbs: 36,
@@ -464,7 +466,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-5',
     title: 'Salmón al horno con espárragos',
     category: 'cena',
-    image: cloudinaryPhoto('img-2502-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-15', 'recipe'),
     calories: 580,
     protein: 40,
     carbs: 12,
@@ -491,7 +493,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-6',
     title: 'Yogur griego con frutos rojos',
     category: 'snack',
-    image: cloudinaryPhoto('img-2532-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-16', 'recipe'),
     calories: 220,
     protein: 18,
     carbs: 24,
@@ -515,7 +517,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-7',
     title: 'Tacos de pavo con guacamole',
     category: 'cena',
-    image: cloudinaryPhoto('img-2557.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-10', 'recipe'),
     calories: 490,
     protein: 35,
     carbs: 30,
@@ -542,7 +544,7 @@ const recipesData: Recipe[] = [
     id: 'recipe-8',
     title: 'Batido verde detox',
     category: 'snack',
-    image: cloudinaryPhoto('img-9675-jpg.jpg', 'recipe'),
+    image: cloudinaryPhoto('sk-17', 'recipe'),
     calories: 180,
     protein: 8,
     carbs: 28,
