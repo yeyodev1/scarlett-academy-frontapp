@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useCloudinary } from '@/composables/useCloudinary'
 import { useScrollReveal } from '@/composables/useScrollReveal'
@@ -9,14 +9,69 @@ const root = ref<HTMLElement | null>(null)
 
 useScrollReveal(root, { y: 34, stagger: 0.09, start: 'top 95%' })
 
-// Una sola foto, sin recortes ni rellenos: Cloudinary solo la redimensiona y el
-// encuadre lo decide `object-fit: cover` en el navegador. Se probaron antes
-// `g_auto` (hacía un zoom cerrado al rostro) y lienzos extendidos con
-// `b_auto:predominant` / `b_gen_fill` (inventaban fondo y se notaba la costura).
-const heroImage = scarlett('heroine', { w: 1600 })
-const heroImageMd = scarlett('heroine', { w: 1100 })
-const heroImageLg = scarlett('heroine', { w: 2000 })
-const heroImageSm = scarlett('heroine', { w: 760 })
+/**
+ * Las fotos rotan con fundido. Sin recortes ni rellenos: Cloudinary solo
+ * redimensiona y el encuadre lo decide `object-fit: cover`. Se probaron antes
+ * `g_auto` (zoom cerrado al rostro) y lienzos extendidos con
+ * `b_auto:predominant` / `b_gen_fill` (inventaban fondo y se veía la costura).
+ */
+const SLIDE_MS = 6000
+
+const slides = (['heroine', 'editorial', 'portrait', 'warm'] as const).map((key) => ({
+  key,
+  src: scarlett(key, { w: 1600 }),
+  srcset: [
+    `${scarlett(key, { w: 760 })} 760w`,
+    `${scarlett(key, { w: 1100 })} 1100w`,
+    `${scarlett(key, { w: 1600 })} 1600w`,
+    `${scarlett(key, { w: 2000 })} 2000w`,
+  ].join(', '),
+}))
+
+const current = ref(0)
+let timer: ReturnType<typeof setInterval> | null = null
+
+/** Respeta a quien pidió menos movimiento: se queda en la primera foto. */
+const wantsMotion = () =>
+  typeof window === 'undefined' ||
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const start = () => {
+  if (timer || slides.length < 2 || !wantsMotion()) return
+  timer = setInterval(() => {
+    current.value = (current.value + 1) % slides.length
+  }, SLIDE_MS)
+}
+
+const stop = () => {
+  if (!timer) return
+  clearInterval(timer)
+  timer = null
+}
+
+// Con la pestaña en segundo plano no tiene sentido seguir rotando.
+const onVisibility = () => (document.hidden ? stop() : start())
+
+onMounted(() => {
+  // Las siguientes fotos se calientan en segundo plano antes de empezar a rotar:
+  // sin esto el primer fundido puede mostrar un fotograma vacío. La primera no
+  // se toca para no competir con el LCP.
+  slides.slice(1).forEach((slide) => {
+    const img = new Image()
+    img.decoding = 'async'
+    img.srcset = slide.srcset
+    img.sizes = '100vw'
+    img.src = slide.src
+  })
+
+  start()
+  document.addEventListener('visibilitychange', onVisibility)
+})
+
+onBeforeUnmount(() => {
+  stop()
+  document.removeEventListener('visibilitychange', onVisibility)
+})
 
 /** Los tres datos que resumen la oferta antes de que bajen a leer. */
 const stats = [
@@ -29,18 +84,22 @@ const stats = [
 <template>
   <section ref="root" class="hero" data-theme="dark">
     <div class="hero__media">
-        <img
-          class="hero__image"
-          :src="heroImage"
-          :srcset="`${heroImageSm} 760w, ${heroImageMd} 1100w, ${heroImage} 1600w, ${heroImageLg} 2000w`"
-          sizes="100vw"
-          alt="Scarlett Cordova"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          width="1600"
-          height="2400"
-        />
+      <img
+        v-for="(slide, i) in slides"
+        :key="slide.key"
+        class="hero__image"
+        :class="{ 'hero__image--active': i === current }"
+        :src="slide.src"
+        :srcset="slide.srcset"
+        sizes="100vw"
+        :alt="i === 0 ? 'Scarlett Cordova' : ''"
+        :aria-hidden="i === 0 ? undefined : 'true'"
+        :loading="i === 0 ? 'eager' : 'lazy'"
+        :fetchpriority="i === 0 ? 'high' : 'low'"
+        decoding="async"
+        width="1600"
+        height="2400"
+      />
       <div class="hero__veil" aria-hidden="true" />
     </div>
 
@@ -101,7 +160,8 @@ const stats = [
   overflow: clip;
 }
 
-// Una sola foto cubriendo el hero completo.
+// Las fotos se apilan y solo la activa es visible; el resto espera con
+// opacidad 0, así el cambio es un fundido y no un salto.
 .hero__image {
   position: absolute;
   inset: 0;
@@ -112,9 +172,17 @@ const stats = [
   // esto elige qué franja se ve. 14% deja el rostro arriba y el torso al centro.
   object-position: center 14%;
   background-color: $lpb-black;
+  opacity: 0;
+  transition: opacity 1.4s ease-in-out;
+
+  &--active { opacity: 1; }
 
   @include mq-down($bp-md) {
     object-position: center 8%;
+  }
+
+  @include reduced-motion {
+    transition: none;
   }
 }
 
