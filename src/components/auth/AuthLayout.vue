@@ -65,12 +65,19 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
 }
 
 // ── Columna de imagen ────────────────────────────────────────────────────────
+// Por debajo de $bp-lg no se oculta: pasa a ser el fondo de toda la pantalla,
+// con la tarjeta del formulario flotando encima. Antes desaparecía y la
+// pantalla quedaba sin ninguna foto de marca.
 .auth__aside {
   position: relative;
   overflow: hidden;
   background: $lpb-black;
 
-  @include mq-down($bp-lg) { display: none; }
+  @include mq-down($bp-lg) {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
 }
 
 .auth__aside-img {
@@ -91,6 +98,10 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
     rgba($lpb-black, 0.2) 45%,
     rgba($lpb-black, 0.9) 100%
   );
+
+  @include mq-down($bp-lg) {
+    background: linear-gradient(180deg, rgba($lpb-black, 0.55) 0%, rgba($lpb-black, 0.75) 100%);
+  }
 }
 
 .auth__quote {
@@ -105,6 +116,8 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
     font-style: italic;
     color: $lpb-green;
   }
+
+  @include mq-down($bp-lg) { display: none; }
 }
 
 // ── Columna del formulario ───────────────────────────────────────────────────
@@ -115,11 +128,27 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
   justify-content: center;
   gap: 1.5rem;
   padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 5vw, 3.5rem);
+
+  @include mq-down($bp-lg) {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 .auth__card {
   width: 100%;
   max-width: 430px;
+
+  // Sobre la foto necesita superficie propia para que el formulario se lea.
+  @include mq-down($bp-lg) {
+    background: rgba($lpb-paper, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba($lpb-black, 0.08);
+    border-radius: $r-lg;
+    padding: clamp(1.5rem, 6vw, 2.25rem);
+    box-shadow: $shadow-lg;
+  }
 }
 
 .auth__brand {
@@ -151,5 +180,10 @@ const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: '
   text-decoration: none;
 
   &:hover { color: $lpb-green; }
+
+  @include mq-down($bp-lg) {
+    color: rgba($lpb-light, 0.75);
+    &:hover { color: $lpb-gold; }
+  }
 }
 </style>
