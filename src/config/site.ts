@@ -12,8 +12,8 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const SITE_URL = import.meta.env.VITE_SITE_URL || window.location.origin
-export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/'
-export const INSTAGRAM_HANDLE = '@scarlettcordova'
+export const INSTAGRAM_URL = import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/scarlettcordova9/'
+export const INSTAGRAM_HANDLE = '@scarlettcordova9'
 
 /** Funnel del ebook — tiene su propio checkout. */
 export const EBOOK_URL = import.meta.env.VITE_EBOOK_URL || 'https://ebook.scarlettcordova.com/'
