@@ -18,7 +18,7 @@ declare module 'vue-router' {
 
 const SITE = SITE_URL
 const OG_IMAGE =
-  'https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg'
+  'https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_jpg/metodosk/sk-14'
 
 const BRAND_TITLE =
   'Scarlett Cordova | Nutrición y entrenamiento con método'
