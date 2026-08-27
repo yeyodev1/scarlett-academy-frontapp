@@ -8,8 +8,8 @@ const root = ref<HTMLElement | null>(null)
 useScrollReveal(root, { y: 40, stagger: 0.07 })
 
 const { scarlett } = useCloudinary()
-const cover = scarlett(2, { w: 900, h: 1200, crop: 'fill', gravity: 'auto' })
-const coverSm = scarlett(2, { w: 560, h: 750, crop: 'fill', gravity: 'auto' })
+const cover = scarlett('warm', { w: 900, h: 1200, crop: 'fill', gravity: 'auto' })
+const coverSm = scarlett('warm', { w: 560, h: 750, crop: 'fill', gravity: 'auto' })
 
 const ebookHref = buildEbookUrl('home-ebook')
 
