@@ -326,8 +326,23 @@ function logout() {
   }
 
   &--active {
+    position: relative;
     background: rgba($lpb-green, 0.14);
     color: $lpb-green-deep;
+    font-weight: 600;
+
+    // Marca de posición: indica la sección activa sin depender solo del color.
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 55%;
+      border-radius: 0 3px 3px 0;
+      background: $lpb-green;
+    }
 
     .sidebar__icon {
       color: $lpb-green-deep;
