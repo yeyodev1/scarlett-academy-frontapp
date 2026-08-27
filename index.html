@@ -10,21 +10,131 @@
     <meta name="theme-color" content="#12110f" />
     <meta name="referrer" content="origin-when-cross-origin" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://scarlettcordova.com/" />
+
+    <!-- Open Graph. WhatsApp y Facebook no ejecutan JS: leen SOLO este HTML,
+         así que estas etiquetas deben estar completas aquí y no depender del
+         router. og:image usa una URL absoluta y https, con ancho/alto
+         declarados: sin ellos WhatsApp cae al preview pequeño. -->
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_EC" />
     <meta property="og:site_name" content="Scarlett Cordova" />
+    <meta property="og:url" content="https://scarlettcordova.com/" />
     <meta property="og:title" content="Scarlett Cordova | Nutrición y entrenamiento con método" />
     <meta property="og:description" content="Dos formas de empezar: el ebook Quema Grasa, Construye Músculo y el Reto Método SK de 3 meses. Ciencia, estrategia y cero castigo." />
-    <meta property="og:image" content="https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg" />
+    <meta property="og:image" content="https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_jpg/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg" />
+    <meta property="og:image:secure_url" content="https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_jpg/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Scarlett Cordova, coach de nutrición y entrenamiento" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Método SK | Quema Grasa, Construye Músculo" />
-    <meta name="twitter:description" content="Cambia desde adentro. Entrena con ciencia." />
-    <meta name="twitter:image" content="https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_auto/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg" />
+    <meta name="twitter:title" content="Scarlett Cordova | Nutrición y entrenamiento con método" />
+    <meta name="twitter:description" content="Dos formas de empezar: el ebook Quema Grasa, Construye Músculo y el Reto Método SK de 3 meses. Ciencia, estrategia y cero castigo." />
+    <meta name="twitter:image" content="https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_jpg/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg" />
+    <meta name="twitter:image:alt" content="Scarlett Cordova, coach de nutrición y entrenamiento" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,200..900,0..100,0..1;1,9..144,200..900,0..100,0..1&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Datos estructurados. Van en el HTML estático porque los crawlers de IA
+         y de buscadores no ejecutan el JS de la SPA. Todo lo declarado aquí
+         corresponde a contenido realmente visible en la página. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://scarlettcordova.com/#website",
+          "url": "https://scarlettcordova.com/",
+          "name": "Scarlett Cordova",
+          "inLanguage": "es-EC",
+          "description": "Nutrición y entrenamiento con método: el ebook Quema Grasa, Construye Músculo y el Reto Método SK de 3 meses.",
+          "publisher": { "@id": "https://scarlettcordova.com/#person" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://scarlettcordova.com/#person",
+          "name": "Scarlett Cordova",
+          "url": "https://scarlettcordova.com/",
+          "jobTitle": "Coach fitness y entrenadora personal",
+          "description": "Coach fitness y entrenadora personal. Enseña nutrición y entrenamiento basados en ciencia aplicada, con un enfoque de consistencia sobre restricción.",
+          "knowsAbout": ["Nutrición deportiva", "Entrenamiento de fuerza", "Recomposición corporal", "Déficit calórico", "Macronutrientes"],
+          "image": "https://res.cloudinary.com/kyt3rjjz/image/upload/w_1200,h_630,c_fill,g_face,q_auto,f_jpg/scarlett/quema-grasa-construye-musculo/img-9664-jpg.jpg",
+          "sameAs": ["https://www.instagram.com/scarlettcordova"]
+        },
+        {
+          "@type": "Book",
+          "@id": "https://scarlettcordova.com/#ebook",
+          "name": "Quema Grasa, Construye Músculo",
+          "author": { "@id": "https://scarlettcordova.com/#person" },
+          "inLanguage": "es",
+          "bookFormat": "https://schema.org/EBook",
+          "description": "Manual de nutrición y entrenamiento: déficit sin drama, cálculo de macros, recetas, suplementación y rutinas de lunes a viernes.",
+          "offers": {
+            "@type": "Offer",
+            "price": "33",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://ebook.scarlettcordova.com/"
+          }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://scarlettcordova.com/#reto",
+          "name": "Reto Método SK",
+          "serviceType": "Programa de entrenamiento y nutrición de 3 meses",
+          "provider": { "@id": "https://scarlettcordova.com/#person" },
+          "areaServed": ["EC", "US", "ES", "MX", "CO", "PE"],
+          "availableChannel": {
+            "@type": "ServiceChannel",
+            "serviceUrl": "https://metodosk.ec/"
+          },
+          "description": "Reto de 3 meses con plan de entrenamiento en casa o gimnasio, plan de nutrición por Karen López, clases en vivo, comunidad y plataforma con seguimiento del progreso."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://scarlettcordova.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Cuál elijo: el ebook o el reto?",
+              "acceptedAnswer": { "@type": "Answer", "text": "El ebook si quieres entender el porqué y avanzar por tu cuenta: macros, recetas, suplementación y rutinas, por 33 dólares de pago único. El Reto Método SK si prefieres que te lleven de la mano tres meses con plan, seguimiento, clases en vivo y comunidad. Muchas empiezan por el ebook y luego entran al reto." }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Puedo comprar los dos?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Sí, y se complementan. El ebook te da la base teórica; el reto te da la ejecución acompañada. No hay contenido duplicado que te haga sentir que pagaste dos veces por lo mismo." }
+            },
+            {
+              "@type": "Question",
+              "name": "¿El reto es en casa o en gimnasio?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Tú eliges. El plan viene en las dos versiones y puedes cambiar de una a otra durante los tres meses si tu rutina cambia." }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Necesito experiencia previa entrenando?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. Las rutinas explican cada ejercicio y la progresión de cargas arranca desde donde estés hoy. Si ya entrenas, el plan también escala." }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Voy a tener que hacer dieta restrictiva?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. La nutrición del reto la arma Karen López, nutricionista, con un enfoque flexible: sin alimentos prohibidos y adaptable a lo que comes en tu casa. El ebook sigue la misma lógica." }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Tengo que vivir en Ecuador?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. Todo funciona online. Participan mujeres desde Ecuador, Latinoamérica, USA y Europa." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <script>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -37,6 +147,63 @@
   </head>
   <body>
     <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1637338760901793&ev=PageView&noscript=1" /></noscript>
+    <!--
+      Respaldo para agentes que no ejecutan JavaScript (GPTBot, ClaudeBot,
+      PerplexityBot y el primer pase de Googlebot), que de otro modo verían un
+      documento vacío. Va en <noscript> a propósito: así ningún usuario ve un
+      parpadeo de texto sin estilos antes de que monte Vue, y no hay texto
+      oculto por CSS. Es un resumen fiel del home — si el home cambia,
+      actualiza esto también.
+    -->
+    <noscript>
+    <main>
+      <h1>Deja de improvisar con tu cuerpo</h1>
+      <p>
+        Scarlett Cordova enseña nutrición y entrenamiento con ciencia, estrategia y cero
+        castigo. Hay dos formas de empezar, y no compiten entre sí.
+      </p>
+
+      <section>
+        <h2>Ebook: Quema Grasa, Construye Músculo — 33 USD, pago único</h2>
+        <p>
+          El manual para dejar de improvisar: déficit sin drama, tus macros calculados según
+          tu peso y actividad, recetas y Scar-Tips, suplementación explicada sin atajos
+          inútiles y rutinas de lunes a viernes con biseries y dropsets. Para quien quiere
+          entender el porqué y arrancar por su cuenta.
+        </p>
+        <p><a href="https://ebook.scarlettcordova.com/">Comprar el ebook</a></p>
+      </section>
+
+      <section>
+        <h2>Reto Método SK — 3 meses de plan</h2>
+        <p>
+          Entrenamiento en casa o en gimnasio con progresión de cargas, plan de nutrición
+          flexible por la nutricionista Karen López, clases en vivo, comunidad privada y una
+          plataforma donde sigues tu progreso. Para quien quiere que la lleven de la mano y no
+          soltar a la semana tres. Funciona online desde Ecuador, Latinoamérica, USA y Europa.
+        </p>
+        <p><a href="https://metodosk.ec/">Reservar cupo en el reto</a></p>
+      </section>
+
+      <section>
+        <h2>Preguntas frecuentes</h2>
+        <h3>¿Cuál elijo: el ebook o el reto?</h3>
+        <p>
+          El ebook si quieres entender el porqué y avanzar por tu cuenta. El Reto Método SK si
+          prefieres que te lleven de la mano tres meses con plan, seguimiento, clases en vivo y
+          comunidad. Muchas empiezan por el ebook y luego entran al reto.
+        </p>
+        <h3>¿Voy a tener que hacer dieta restrictiva?</h3>
+        <p>
+          No. La nutrición del reto la arma Karen López, nutricionista, con un enfoque
+          flexible: sin alimentos prohibidos y adaptable a lo que comes en tu casa.
+        </p>
+        <h3>¿Tengo que vivir en Ecuador?</h3>
+        <p>No. Todo funciona online, desde Ecuador, Latinoamérica, USA y Europa.</p>
+      </section>
+    </main>
+    </noscript>
+
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
