@@ -1,0 +1,277 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Sistema de diseño — Scarlett Cordova (scarlettcordova.com)
+//
+// Dirección híbrida: la elegancia editorial de Método SK (Fraunces serif, crema)
+// con la energía del funnel del ebook (secciones oscuras, coral, lima,
+// numeración 01/02/03).
+//
+// IMPORTANTE: este archivo se inyecta en CADA componente vía `additionalData`.
+// Solo puede contener variables, funciones y mixins — NUNCA reglas CSS sueltas,
+// o se duplicarían en el bundle una vez por componente. Las clases globales
+// viven en global.scss, que se importa una sola vez.
+// ─────────────────────────────────────────────────────────────────────────────
+
+@use './colorVariables.module.scss' as *;
+@use './fonts.module.scss' as *;
+
+// ── Ritmo vertical ───────────────────────────────────────────────────────────
+$sec-pad-y:       clamp(5rem, 11vw, 10.5rem);
+$sec-pad-y-tight: clamp(3.5rem, 7vw, 6rem);
+
+// ── Radios ───────────────────────────────────────────────────────────────────
+$r-sm:  8px;
+$r-md:  16px;
+$r-lg:  28px;
+$r-pill: 999px;
+
+// ── Sombras cálidas (no grises: la marca es cálida) ──────────────────────────
+$shadow-sm: 0 2px 12px rgba(18, 17, 15, 0.06);
+$shadow-md: 0 12px 40px rgba(18, 17, 15, 0.10);
+$shadow-lg: 0 32px 80px rgba(18, 17, 15, 0.16);
+
+// ── Easing ───────────────────────────────────────────────────────────────────
+$ease-out: cubic-bezier(0.2, 0.7, 0, 1);
+$ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SUPERFICIES
+// Cada mixin fija bg + variables locales de texto, para que el contenido
+// interior (títulos, párrafos, bordes) se adapte solo al tema de la sección.
+// ═════════════════════════════════════════════════════════════════════════════
+
+@mixin surface-light {
+  background: $lpb-paper;
+  --s-text:   #{$lpb-black};
+  --s-soft:   #{$lpb-graphite};
+  --s-mute:   #{$lpb-muted};
+  --s-line:   #{rgba($lpb-black, 0.10)};
+  --s-accent: #{$lpb-green};
+  --s-card:   #{$lpb-white};
+  color: var(--s-text);
+}
+
+@mixin surface-cream {
+  background: $lpb-cream;
+  --s-text:   #{$lpb-black};
+  --s-soft:   #{$lpb-graphite};
+  --s-mute:   #{$lpb-muted};
+  --s-line:   #{rgba($lpb-black, 0.12)};
+  --s-accent: #{$lpb-green};
+  --s-card:   #{$lpb-paper};
+  color: var(--s-text);
+}
+
+/// Oscuro con tinte cálido — es el fondo del funnel del ebook, no un negro plano.
+@mixin surface-dark {
+  background:
+    radial-gradient(120% 80% at 15% 0%, rgba($lpb-green, 0.13) 0%, transparent 55%),
+    radial-gradient(90% 70% at 95% 100%, rgba($lpb-green-deep, 0.18) 0%, transparent 60%),
+    $lpb-black;
+  --s-text:   #{$lpb-light};
+  --s-soft:   #{rgba($lpb-light, 0.76)};
+  --s-mute:   #{rgba($lpb-light, 0.52)};
+  --s-line:   #{rgba($lpb-light, 0.14)};
+  --s-accent: #{$lpb-green};
+  --s-card:   #{rgba($lpb-light, 0.045)};
+  color: var(--s-text);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// TIPOGRAFÍA
+// ═════════════════════════════════════════════════════════════════════════════
+
+/// Titular editorial en Fraunces. Es la voz de la marca.
+@mixin display($min: 2.4rem, $max: 5.2rem) {
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: clamp($min, 6vw, $max);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
+}
+
+/// Titular contundente en mayúsculas — se usa solo en secciones oscuras,
+/// donde el lenguaje del ebook pide fuerza en vez de elegancia.
+@mixin display-impact($min: 2.2rem, $max: 4.6rem) {
+  font-family: $font-sans;
+  font-weight: 800;
+  font-size: clamp($min, 5.5vw, $max);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+/// Etiqueta pequeña sobre el titular. Coral, espaciada, con guion delante.
+@mixin eyebrow($color: null) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: $font-mono;
+  font-size: clamp(0.68rem, 1.1vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  @if $color {
+    color: $color;
+  } @else {
+    color: var(--s-accent, #{$lpb-green});
+  }
+
+  &::before {
+    content: '';
+    width: 2.2em;
+    height: 1px;
+    background: currentColor;
+    flex: none;
+  }
+}
+
+/// Numeración editorial 01 / 02 / 03.
+@mixin num {
+  font-family: $font-mono;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  color: var(--s-accent, #{$lpb-green});
+  font-variant-numeric: tabular-nums;
+}
+
+@mixin body-lg {
+  font-family: $font-sans;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  line-height: 1.62;
+  color: var(--s-soft, #{$lpb-graphite});
+}
+
+@mixin body {
+  font-family: $font-sans;
+  font-size: clamp(0.95rem, 1.2vw, 1.03rem);
+  line-height: 1.65;
+  color: var(--s-soft, #{$lpb-graphite});
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COMPONENTES
+// ═════════════════════════════════════════════════════════════════════════════
+
+/// Botón principal — píldora coral. El CTA de compra siempre usa este.
+@mixin btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7em;
+  padding: 1.05rem 2.2rem;
+  border-radius: $r-pill;
+  background: $lpb-green;
+  color: $lpb-white;
+  font-family: $font-mono;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.4s $ease-out, background 0.3s ease, box-shadow 0.4s $ease-out;
+  box-shadow: 0 8px 28px rgba($lpb-green, 0.32);
+
+  &:hover:not(:disabled) {
+    background: $lpb-green-dark;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 38px rgba($lpb-green, 0.42);
+  }
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+}
+
+/// Botón secundario — contorno que hereda el tema de la sección.
+@mixin btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 1.05rem 2rem;
+  border-radius: $r-pill;
+  background: transparent;
+  color: var(--s-text, #{$lpb-black});
+  border: 1px solid var(--s-line, #{rgba($lpb-black, 0.2)});
+  font-family: $font-mono;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.4s $ease-out;
+
+  &:hover:not(:disabled) {
+    border-color: var(--s-accent, #{$lpb-green});
+    color: var(--s-accent, #{$lpb-green});
+    transform: translateY(-2px);
+  }
+}
+
+/// Badge lima — el acento de alta energía del ebook. Úsalo con moderación:
+/// precio, "más elegido", countdown. Nunca para texto largo.
+@mixin badge-lime {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.42rem 0.9rem;
+  border-radius: $r-pill;
+  background: $lpb-gold;
+  color: $lpb-black;
+  font-family: $font-mono;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@mixin card {
+  background: var(--s-card, #{$lpb-white});
+  border: 1px solid var(--s-line, #{rgba($lpb-black, 0.1)});
+  border-radius: $r-lg;
+  overflow: hidden;
+}
+
+/// Palabra acentuada dentro de un titular.
+@mixin accent-word {
+  color: var(--s-accent, #{$lpb-green});
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// LAYOUT
+// ═════════════════════════════════════════════════════════════════════════════
+
+@mixin section($pad: $sec-pad-y) {
+  position: relative;
+  padding-block: $pad;
+  overflow: clip;
+}
+
+@mixin container($max: 1440px) {
+  width: 100%;
+  max-width: $max;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 6vw, 7rem);
+}
+
+// ── Breakpoints ──────────────────────────────────────────────────────────────
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+@mixin mq-down($bp) {
+  @media (max-width: $bp) { @content; }
+}
+
+@mixin mq-up($bp) {
+  @media (min-width: $bp + 1px) { @content; }
+}
+
+/// Respeta a quien pidió menos movimiento.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) { @content; }
+}
