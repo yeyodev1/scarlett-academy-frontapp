@@ -4,3 +4,6 @@ dist
 *.local
 .vercel
 .env*
+
+# Artefactos emitidos por tsc (vite carga .js antes que .ts)
+vite.config.js
