@@ -5,7 +5,7 @@ import { gsap } from '@/composables/useScrollReveal'
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/config/site'
 
 const { scarlett } = useCloudinary()
-const portrait = scarlett(2, { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
+const portrait = scarlett('portrait', { w: 1200, h: 1500, crop: 'fill', gravity: 'face' })
 
 const root = ref<HTMLElement | null>(null)
 const photoEl = ref<HTMLElement | null>(null)
