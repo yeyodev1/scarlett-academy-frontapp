@@ -9,8 +9,8 @@ defineProps<{
 }>()
 
 const { scarlett } = useCloudinary()
-const aside = scarlett(2, { w: 1100, h: 1500, crop: 'fill', gravity: 'auto' })
-const asideSm = scarlett(2, { w: 700, h: 950, crop: 'fill', gravity: 'auto' })
+const aside = scarlett('editorial', { w: 1100, h: 1500, crop: 'fill', gravity: 'face' })
+const asideSm = scarlett('editorial', { w: 700, h: 950, crop: 'fill', gravity: 'face' })
 </script>
 
 <template>
