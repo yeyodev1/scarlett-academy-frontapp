@@ -5,8 +5,6 @@ import ProductsSection from '@/components/home/ProductsSection.vue'
 import EbookSection from '@/components/home/EbookSection.vue'
 import PlansSection from '@/components/presale/PlansSection.vue'
 import AuthoritySection from '@/components/home/AuthoritySection.vue'
-import VideoSection from '@/components/home/VideoSection.vue'
-import TestimonialsSection from '@/components/home/TestimonialsSection.vue'
 import FaqSection from '@/components/home/FaqSection.vue'
 import FinalCtaSection from '@/components/home/FinalCtaSection.vue'
 import StickyCta from '@/components/home/StickyCta.vue'
@@ -57,8 +55,6 @@ const marqueeClosing = [
 
     <!-- Prueba y confianza, comunes a los dos productos -->
     <AuthoritySection />
-    <VideoSection />
-    <TestimonialsSection />
     <FaqSection />
     <FinalCtaSection />
 
